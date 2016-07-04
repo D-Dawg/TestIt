@@ -1,0 +1,14 @@
+{
+  "BCRYPT_ROUNDS": 10,
+  "MONGODB_URL": "mongodb://localhost/bftesting",
+  "ADMIN_EMAIL": "example@example.com",
+  "MAIL_SENDER": "example@example.com",
+  "MAIL": {
+    "pool": true,
+    "host": "example.com",
+    "auth": {
+      "user": "example",
+      "pass": "example"
+    }
+  }
+}
