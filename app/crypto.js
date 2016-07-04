@@ -31,14 +31,12 @@
         });
     };
 
-
     let hash = (string, salt) => {
         return new Promise(resolve => {
             bcrypt.hash(string, salt, null, (e, data) => resolve(data));
         });
     };
-
-
+    
     let compare = (string, hash) => {
         return new Promise(resolve => {
             bcrypt.compare(string, hash, (e, data) => resolve(data));
