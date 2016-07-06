@@ -3,7 +3,7 @@
 //Copyright (c) 2016 David Oberhofer
 
 //Permission is hereby granted, free of charge, to any person obtaining a copy
-//of this software and associated documentation files (the "Software"), to deal
+//of this software and associated documentation files (the 'Software'), to deal
 //in the Software without restriction, including without limitation the rights
 //to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //copies of the Software, and to permit persons to whom the Software is
@@ -12,7 +12,7 @@
 //The above copyright notice and this permission notice shall be included in all
 //copies or substantial portions of the Software.
 
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 //AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -24,6 +24,10 @@
     const nodemailer = require('nodemailer');
     const config = require('./config');
     const logger = require('proxey-ilogger')('Mailer');
+    const Promise = require('bluebird');
+    const fs = Promise.promisifyAll(require('fs'));
+    const handlebars = require('handlebars');
+    const path = require('path');
     const transporter = nodemailer.createTransport(config.MAIL);
 
     module.exports.send = (to, subject, html) => {
@@ -42,6 +46,17 @@
             }
         });
     };
+
+    module.exports.sendWithTemplate = Promise.coroutine(function*(to, subject, template, context) {
+        let hbsTemplate = yield this.loadTemplate(template);
+        let html = hbsTemplate(context);
+        this.send(to, subject, html);
+    });
+
+    module.exports.loadTemplate = Promise.coroutine(function*(template) {
+        let buff = yield fs.readFileAsync(path.join(__dirname, 'templates', template));
+        return handlebars.compile(buff.toString());
+    });
 
 
 })();

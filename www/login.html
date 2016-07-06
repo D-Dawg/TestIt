@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="login" ng-controller="LoginController">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>TestIt Login</title>
+    <link rel="stylesheet" href="assets/testit.min.css">
+    <script src="assets/testit-login-dependencies.min.js"></script>
+    <script>
+        angular.module('login', []).controller('LoginController', function($scope, $http) {
+            $scope.mode = 'login';
+            $scope.requestNewPassword = {
+                email: '',
+                doRequest: function() {
+                    var that = this;
+                    this.loading = true;
+                    $http.post('/auth/requestNewPassword', {
+                        email: this.email
+                    }).success(function() {
+                        that.loading = false;
+                        that.email = '';
+                    });
+                }
+            };
+        });
+    </script>
+</head>
+<body>
+<div class="container login-container">
+    <div class="row">
+        <div class="col l6 offset-l3">
+            <!-- DEFAULT LOGIN -->
+            <div class="card blue-grey darken-4 animated fadeIn" ng-show="mode === 'login'">
+                <div class="card-content white-text">
+                    <span class="card-title">Login</span>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="user" type="text" class="validate">
+                            <label for="user">User</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-action right-align">
+                    <a href="#" ng-click="mode = 'resetPassword'">Forgot Password</a>
+                    <a class="waves-effect waves-light btn blue-grey-text text-darken-4">Login</a>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD -->
+            <div class="card blue-grey darken-4 animated fadeIn" ng-show="mode === 'resetPassword'">
+                <div class="card-content white-text">
+                    <span class="card-title">Forgot Password</span>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="email" type="email" class="validate" ng-model="requestNewPassword.email">
+                            <label for="email">E-Mail</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action right-align">
+                    <a href="#" ng-click="mode = 'login'">Back to login</a>
+                    <button class="waves-effect waves-light btn blue-grey-text text-darken-4" ng-disabled="!(requestNewPassword.email)" ng-click="requestNewPassword.doRequest()">Request new password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

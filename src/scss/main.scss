@@ -1,0 +1,16 @@
+$roboto-font-path: "/assets/roboto/";
+
+@import "../bower/animate.css/animate.css";
+@import "../bower/Materialize/sass/materialize";
+
+
+body {
+  background-size: contain;
+  background: url(/assets/background.png) no-repeat fixed;
+}
+
+@media screen and (min-width: 600px) {
+  .login-container {
+    padding-top: 100px;
+  }
+}

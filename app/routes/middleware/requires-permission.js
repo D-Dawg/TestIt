@@ -28,7 +28,7 @@
         return Promise.coroutine(function*(req, res, next) {
             if(req.cookies && req.cookies.accessToken) {
                 let result = yield AccessToken.findOne({'accessToken': req.cookies.accessToken});
-                console.log(result);
+                //TODO implement
             } else {
                 res.sendStatus(401);
             }

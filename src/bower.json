@@ -1,0 +1,23 @@
+{
+  "name": "testit-bower",
+  "homepage": "https://github.com/Proxey/TestIt",
+  "authors": [
+    "David Oberhofer <oberhofer.david@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "animate.css": "^3.5.2",
+    "Materialize": "materialize#^0.97.6",
+    "angular": "^1.5.7"
+  }
+}

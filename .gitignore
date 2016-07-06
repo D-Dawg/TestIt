@@ -3,3 +3,6 @@
 **/bower_components
 **/.sass-cache
 app/config.json
+src/out
+src/bower
+www/assets

@@ -19,12 +19,11 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
-(function() {
+(function () {
     'use strict';
-    const config = require('./config');
-    const ilogger = require('proxey-ilogger');
-    ilogger.setLevel(ilogger.Level[config.LOG_LEVEL]);
-
-    require('./persistence');
-    require('./server');
+    module.exports = {
+        NEW_USER: 'newUser.hbs',
+        NEW_PASSWORD_REQUEST: 'newPasswordRequest.hbs',
+        NEW_PASSWORD: 'newPassword.hbs'
+    };
 })();

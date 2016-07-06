@@ -19,12 +19,30 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
-(function() {
+(function () {
     'use strict';
-    const config = require('./config');
-    const ilogger = require('proxey-ilogger');
-    ilogger.setLevel(ilogger.Level[config.LOG_LEVEL]);
+    const Promise = require('bluebird');
+    const AccessToken = require('../../models/AccessToken');
+    const User = require('../../models/User');
 
-    require('./persistence');
-    require('./server');
+    module.exports = () => {
+        return Promise.coroutine(function*(req, res, next) {
+            if (req.cookies && req.cookies.accessToken) {
+                let result = yield AccessToken.findOne({accessToken: req.cookies.accessToken});
+                if (result !== null) {
+                    let user = yield User.findOne({user: result.user});
+                    if (user !== null) {
+                        req.user = user;
+                        next();
+                    } else {
+                        res.sendStatus(401);
+                    }
+                } else {
+                    res.sendStatus(401);
+                }
+            } else {
+                res.sendStatus(401);
+            }
+        });
+    };
 })();
