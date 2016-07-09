@@ -37,9 +37,10 @@
             let password = crypto.genPassword();
             let user = new User({
                 user: 'admin',
+                name: 'Administrator',
                 email: config.ADMIN_EMAIL,
                 password: yield crypto.encrypt(password),
-                permissions: [Object.keys(permission)]
+                permissions: Object.keys(permission)
             });
             yield user.save();
             mailer.send(config.ADMIN_EMAIL, 'Admin Account Created', password);

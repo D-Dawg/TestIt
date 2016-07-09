@@ -83,7 +83,7 @@
         } else {
             res.location('/login?passwordResetStatus=ERROR');
         }
-        res.sendStatus(301);
+        res.sendStatus(302);
     }));
 
     router.post('/requestNewPassword', Promise.coroutine(function*(req, res) {

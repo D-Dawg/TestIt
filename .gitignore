@@ -4,5 +4,5 @@
 **/.sass-cache
 app/config.json
 src/out
-src/bower
+bower
 www/assets

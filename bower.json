@@ -18,6 +18,11 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "Materialize": "materialize#^0.97.6",
-    "angular": "^1.5.7"
+    "angular": "^1.5.7",
+    "sweetalert2": "^4.0.8",
+    "font-awesome": "^4.6.3",
+    "angular-cookies": "^1.5.7",
+    "moment": "^2.14.1",
+    "angular-ui-router": "^0.3.1"
   }
 }

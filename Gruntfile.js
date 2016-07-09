@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     module.exports = grunt => {
         grunt.initConfig({
@@ -25,38 +25,49 @@
             concat: {
                 deps: {
                     src: [
-                        'src/bower/jquery/dist/jquery.min.js',
-                        'src/bower/Materialize/dist/js/materialize.min.js'
+                        'bower/jquery/dist/jquery.min.js',
+                        'bower/Materialize/dist/js/materialize.min.js',
+                        'bower/angular/angular.min.js',
+                        'bower/angular-cookies/angular-cookies.min.js',
+                        'bower/angular-ui-router/release/angular-ui-router.min.js',
+                        'bower/sweetalert2/dist/sweetalert2.min.js',
+                        'bower/moment/min/moment-with-locales.min.js'
                     ],
                     dest: 'www/assets/testit-dependencies.min.js'
                 },
-                'login-deps': {
-                    src: [
-                        'src/bower/jquery/dist/jquery.min.js',
-                        'src/bower/Materialize/dist/js/materialize.min.js',
-                        'src/bower/angular/angular.min.js'
-                    ],
-                    dest: 'www/assets/testit-login-dependencies.min.js'
+                dist: {
+                    src: ['src/js/app.js', 'src/js/**/*.js'],
+                    dest: 'src/out/testit.js'
+
                 }
             },
             copy: {
                 assets: {
                     files: [
-                        {expand: true, src: ['roboto/*'], cwd: 'src/bower/Materialize/fonts/', dest: 'www/assets/'}
+                        {expand: true, src: ['roboto/*'], cwd: 'bower/Materialize/fonts/', dest: 'www/assets/'},
+                        {expand: true, src: ['*'], cwd: 'bower/font-awesome/fonts', dest: 'www/assets/font-awesome'}
                     ]
+                }
+            },
+            uglify: {
+                dist: {
+                    files: {
+                        'www/assets/testit.min.js': ['src/out/testit.js']
+                    }
                 }
             }
         });
         grunt.registerTask('test', ['jshint:all']);
         grunt.registerTask('compile-css', ['sass:dist', 'cssmin:dist']);
-        grunt.registerTask('concat-deps', ['concat:deps', 'concat:login-deps']);
-        grunt.registerTask('release', ['copy:assets', 'compile-css', 'concat-deps']);
+        grunt.registerTask('compile-js', ['concat:dist', 'uglify:dist']);
+        grunt.registerTask('release', ['copy:assets', 'compile-css', 'compile-js', 'concat:deps']);
 
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-contrib-sass');
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-concat');
         grunt.loadNpmTasks('grunt-contrib-copy');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
 
     };
 })();

@@ -1,1 +1,1 @@
-var bftesting = angular.module('bftesting', []);
+var testit = angular.module('testit', []);

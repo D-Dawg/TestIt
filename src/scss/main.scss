@@ -1,8 +1,10 @@
 $roboto-font-path: "/assets/roboto/";
+$fa-font-path: "/assets/font-awesome";
 
-@import "../bower/animate.css/animate.css";
-@import "../bower/Materialize/sass/materialize";
-
+@import "../../bower/animate.css/animate.css";
+@import "../../bower/Materialize/sass/materialize";
+@import "../../bower/sweetalert2/src/sweetalert2";
+@import "../../bower/font-awesome/scss/font-awesome";
 
 body {
   background-size: contain;

@@ -22,7 +22,7 @@
 (function () {
     'use strict';
     module.exports = {
-        EDIT_USER: 'EDIT_USER',
+        ADMINISTRATION: 'ADMINISTRATION',
         EDIT_TEMPLATE: 'EDIT_TEMPLATE',
         EDIT_TEST: 'EDIT_TEST'
     };

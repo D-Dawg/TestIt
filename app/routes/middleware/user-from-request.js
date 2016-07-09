@@ -23,18 +23,16 @@
     'use strict';
     const Promise = require('bluebird');
     const AccessToken = require('../../models/AccessToken');
-    const userFromRequest = require('./user-from-request');
     const User = require('../../models/User');
 
-    module.exports = () => {
-        return Promise.coroutine(function*(req, res, next) {
-            let user = yield userFromRequest(req);
-            if(user !== null) {
-                req.user = user;
-                next();
-            } else {
-                res.sendStatus(401);
+    module.exports = Promise.coroutine(function*(req) {
+        if(req.cookies && req.cookies.accessToken) {
+            let accessToken = yield AccessToken.findOne({accessToken: req.cookies.accessToken});
+            if (accessToken !== null) {
+                return yield User.findOne({user: accessToken.user}).select('user email name permissions');
             }
-        });
-    };
+        }
+        return null;
+    });
+
 })();

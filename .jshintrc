@@ -68,7 +68,7 @@
 
   // Custom Globals
   "globals": {
-    "bftesting": true,
+    "testit": true,
     "angular": true
   }
 }

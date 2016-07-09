@@ -4,23 +4,56 @@
     <meta charset="UTF-8">
     <title>TestIt Login</title>
     <link rel="stylesheet" href="assets/testit.min.css">
-    <script src="assets/testit-login-dependencies.min.js"></script>
+    <script src="assets/testit-dependencies.min.js"></script>
     <script>
-        angular.module('login', []).controller('LoginController', function($scope, $http) {
+        angular.module('login', ['ngCookies']).config(function ($locationProvider) {
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            });
+        }).controller('LoginController', function ($scope, $http, $location, $cookies, $window) {
+            var passwordResetStatus = $location.search().passwordResetStatus;
+            if(passwordResetStatus === 'SUCCESS') {
+                swal('Password reset successful', 'You will receive a new passwort shortly');
+            } else if(passwordResetStatus === 'ERROR') {
+                swal('Password reset failed', 'Oh no!');
+            }
+            $location.search('passwordResetStatus', null);
+
             $scope.mode = 'login';
             $scope.requestNewPassword = {
                 email: '',
-                doRequest: function() {
+                doRequest: function () {
                     var that = this;
                     this.loading = true;
                     $http.post('/auth/requestNewPassword', {
                         email: this.email
-                    }).success(function() {
+                    }).success(function () {
                         that.loading = false;
                         that.email = '';
                     });
                 }
             };
+
+            $scope.login = {
+                loading: false,
+                user: '',
+                password: '',
+                doLogin: function () {
+                    this.loading = true;
+                    var that = this;
+                    $http.post('/auth/login', {
+                        user: this.user,
+                        password: this.password
+                    }).success(function (data) {
+                        $cookies.put('accessToken', data.accessToken, {expires: moment().add(5, 'year').toString()});
+                        $window.location.href = '/home';
+                    }).error(function () {
+                        swal('', 'Incorrect username or password');
+                        that.loading = false;
+                    });
+                }
+            }
         });
     </script>
 </head>
@@ -32,13 +65,14 @@
             <div class="card blue-grey darken-4 animated fadeIn" ng-show="mode === 'login'">
                 <div class="card-content white-text">
                     <span class="card-title">Login</span>
+
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="user" type="text" class="validate">
+                            <input id="user" type="text" ng-model="login.user">
                             <label for="user">User</label>
                         </div>
                         <div class="input-field col s12">
-                            <input id="password" type="password" class="validate">
+                            <input id="password" type="password" ng-model="login.password">
                             <label for="password">Password</label>
                         </div>
                     </div>
@@ -46,7 +80,9 @@
                 </div>
                 <div class="card-action right-align">
                     <a href="#" ng-click="mode = 'resetPassword'">Forgot Password</a>
-                    <a class="waves-effect waves-light btn blue-grey-text text-darken-4">Login</a>
+                    <a class="waves-effect waves-light btn blue-grey-text text-darken-4" ng-click="login.doLogin()"
+                       ng-disabled="login.loading"><i class="fa fa-spin fa-refresh" ng-show="login.loading"></i>
+                        Login</a>
                 </div>
             </div>
 
@@ -54,6 +90,7 @@
             <div class="card blue-grey darken-4 animated fadeIn" ng-show="mode === 'resetPassword'">
                 <div class="card-content white-text">
                     <span class="card-title">Forgot Password</span>
+
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="email" type="email" class="validate" ng-model="requestNewPassword.email">
@@ -63,7 +100,10 @@
                 </div>
                 <div class="card-action right-align">
                     <a href="#" ng-click="mode = 'login'">Back to login</a>
-                    <button class="waves-effect waves-light btn blue-grey-text text-darken-4" ng-disabled="!(requestNewPassword.email)" ng-click="requestNewPassword.doRequest()">Request new password</button>
+                    <button class="waves-effect waves-light btn blue-grey-text text-darken-4"
+                            ng-disabled="!(requestNewPassword.email)" ng-click="requestNewPassword.doRequest()">Request
+                        new password
+                    </button>
                 </div>
             </div>
         </div>

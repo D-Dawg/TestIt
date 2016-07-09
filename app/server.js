@@ -23,16 +23,55 @@
     'use strict';
     const express = require('express');
     const logger = require('proxey-ilogger')('Webserver');
+    const Promise = require('bluebird');
     const cookieParser = require('cookie-parser');
     const bodyParser = require('body-parser');
     const path = require('path');
+    const requiresPermission = require('./routes/middleware/requires-permission');
+    const requiresLogin = require('./routes/middleware/requires-login');
+    const userFromRequest = require('./routes/middleware/user-from-request');
+    const permission = require('./enum/permission');
+
+    const WEBROOT = path.join(__dirname, '..', 'www');
 
     const app = express();
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use('/', express.static(path.join(__dirname, '..', 'www')));
-    app.use('/login', express.static(path.join(__dirname, '..', 'www', 'login.html')));
+    app.use('/', express.static(path.join(WEBROOT)));
     app.use('/auth', require('./routes/auth'));
+    app.use('/admin', requiresPermission(permission.ADMINISTRATION), require('./routes/admin'));
+    app.use('/personal', requiresLogin(), require('./routes/personal'));
+
+    app.get('/', Promise.coroutine(function*(req, res) {
+        let user = yield userFromRequest(req);
+        if(user !== null) {
+            res.location('/home');
+        } else {
+            res.location('/login');
+        }
+        res.sendStatus(302);
+    }));
+
+    app.get('/home', Promise.coroutine(function*(req, res) {
+        let user = yield userFromRequest(req);
+        if(user !== null) {
+            res.sendFile(path.join(WEBROOT, 'home.html'));
+        } else {
+            res.location('/login');
+            res.sendStatus(302);
+        }
+    }));
+
+    app.get('/login', Promise.coroutine(function*(req, res) {
+        let user = yield userFromRequest(req);
+        if(user === null) {
+            res.sendFile(path.join(WEBROOT, 'login.html'));
+        } else {
+            res.location('/home');
+            res.sendStatus(302);
+        }
+    }));
+
 
     let port = process.env.port || 8080;
     app.listen(port, () => {
