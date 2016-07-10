@@ -28,11 +28,25 @@
     mongoose.Promise = require('bluebird');
 
     logger.info(`connecting`);
-    mongoose.connect(config.MONGODB_URL);
+    let connect = () => {
+        mongoose.connect(config.MONGODB_URL);
+    };
     mongoose.connection.on('error', err => {
         logger.error('connection error: ' + err);
+        mongoose.disconnect();
     });
-    mongoose.connection.once('open', () => {
+    mongoose.connection.on('open', () => {
         logger.info('connected');
     });
+    mongoose.connection.on('reconnected', () => {
+        logger.info('reconnected');
+    });
+    mongoose.connection.on('disconnected', () => {
+        logger.info('disconnected');
+        setTimeout(connect, 5000);
+    });
+
+    connect();
+
+
 })();

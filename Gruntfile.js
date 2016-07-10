@@ -2,6 +2,12 @@
     'use strict';
     module.exports = grunt => {
         grunt.initConfig({
+            watch: {
+                scripts: {
+                    files: ['src/js/**/*.js'],
+                    tasks: ['compile-js']
+                }
+            },
             jshint: {
                 options: {
                     jshintrc: true
@@ -37,8 +43,19 @@
                 },
                 dist: {
                     src: ['src/js/app.js', 'src/js/**/*.js'],
-                    dest: 'src/out/testit.js'
+                    dest: 'src/out/testit-es6.js'
 
+                }
+            },
+            babel: {
+                options: {
+                    sourceMap: false,
+                    presets: ['es2015']
+                },
+                dist: {
+                    files: {
+                        'src/out/testit.js': 'src/out/testit-es6.js'
+                    }
                 }
             },
             copy: {
@@ -59,7 +76,7 @@
         });
         grunt.registerTask('test', ['jshint:all']);
         grunt.registerTask('compile-css', ['sass:dist', 'cssmin:dist']);
-        grunt.registerTask('compile-js', ['concat:dist', 'uglify:dist']);
+        grunt.registerTask('compile-js', ['concat:dist', 'babel:dist', 'uglify:dist']);
         grunt.registerTask('release', ['copy:assets', 'compile-css', 'compile-js', 'concat:deps']);
 
         grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -68,6 +85,8 @@
         grunt.loadNpmTasks('grunt-contrib-concat');
         grunt.loadNpmTasks('grunt-contrib-copy');
         grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-watch');
+        grunt.loadNpmTasks('grunt-babel');
 
     };
 })();
