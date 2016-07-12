@@ -1,6 +1,8 @@
 {
+  "BASE_URL": "http://localhost:8080",
+  "LOG_LEVEL": "DEBUG",
   "BCRYPT_ROUNDS": 10,
-  "MONGODB_URL": "mongodb://localhost/bftesting",
+  "MONGODB_URL": "mongodb://localhost/testit",
   "ADMIN_EMAIL": "example@example.com",
   "MAIL_SENDER": "example@example.com",
   "MAIL": {

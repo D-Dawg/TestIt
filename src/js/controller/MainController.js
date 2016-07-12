@@ -1,8 +1,12 @@
-(function() {
+testit.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     'use strict';
-    testit.controller('MainController', ['$scope', '$http', function ($scope, $http) {
-        $http.get('/personal/session').then(response => {
-            $scope.session = response.data;
-        });
-    }]);
-})();
+
+    $http.get('/personal/session').then(response => {
+        $scope.session = response.data;
+
+        $scope.permissions = {};
+        for(let i = 0; i < response.data.permissions.length; i++) {
+            $scope.permissions[response.data.permissions[i]] = response.data.me.permissions.indexOf(response.data.permissions[i]) > -1;
+        }
+    });
+}]);

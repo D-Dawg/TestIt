@@ -1,0 +1,16 @@
+<div class="container well">
+    <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+            <h2>Administration</h2>
+            <div class="row">
+                <div class="col s12">
+                    <ul materialize-tab class="tabs">
+                        <li class="tab col s3" ui-sref="administration.users" ui-sref-active="active"><a>Users</a></li>
+                        <li class="tab col s3" ui-sref="administration.settings" ui-sref-active="active"><a>Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

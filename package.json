@@ -1,10 +1,11 @@
 {
-  "name": "src",
+  "name": "testit",
   "version": "1.0.0",
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",

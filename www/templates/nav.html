@@ -1,10 +1,11 @@
 <nav class="blue-grey">
     <div class="nav-wrapper container">
-        <a href="#" class="brand-logo">TestIt</a>
+        <a class="brand-logo">TestIt</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html"><i class="fa fa-user"></i> {{session.me.name}}</a></li>
+            <li><a ui-sref="templates">Templates</a></li>
+            <li><a ui-sref="tests">Tests</a></li>
+            <li ng-if="permissions.ADMINISTRATION"><a ui-sref="administration.users">Administration</a></li>
+            <li><a ui-sref="account"><i class="fa fa-user"></i> {{session.me.name}}</a></li>
         </ul>
     </div>
 </nav>

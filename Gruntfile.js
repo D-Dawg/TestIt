@@ -35,6 +35,7 @@
                         'bower/Materialize/dist/js/materialize.min.js',
                         'bower/angular/angular.min.js',
                         'bower/angular-cookies/angular-cookies.min.js',
+                        'bower/angular-animate/angular-animate.min.js',
                         'bower/angular-ui-router/release/angular-ui-router.min.js',
                         'bower/sweetalert2/dist/sweetalert2.min.js',
                         'bower/moment/min/moment-with-locales.min.js'
