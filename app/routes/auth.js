@@ -28,7 +28,6 @@
     const logger = require('proxey-ilogger')('Auth');
     const template = require('../enum/template');
     const mailer = require('../mailer');
-    const config = require('../config');
     let router = require('express').Router();
 
     router.post('/login', Promise.coroutine(function*(req, res) {
@@ -93,7 +92,7 @@
                 let code = Math.random().toString(36).toUpperCase().slice(2);
                 user.passwordResetCode = code;
                 user.save();
-                mailer.sendWithTemplate(user.email, 'New password requested', template.NEW_PASSWORD_REQUEST, {url: `${config.BASE_URL}/auth/confirmPasswordResetRequest/${code}`});
+                mailer.sendWithTemplate(user.email, 'New password requested', template.NEW_PASSWORD_REQUEST, {url: `${process.env.TESTIT_BASE_URL}/auth/confirmPasswordResetRequest/${code}`});
                 res.end();
             } else {
                 res.sendStatus(400);

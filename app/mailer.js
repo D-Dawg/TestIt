@@ -22,17 +22,23 @@
 (function () {
     'use strict';
     const nodemailer = require('nodemailer');
-    const config = require('./config');
     const logger = require('proxey-ilogger')('Mailer');
     const Promise = require('bluebird');
     const fs = Promise.promisifyAll(require('fs'));
     const handlebars = require('handlebars');
     const path = require('path');
-    const transporter = nodemailer.createTransport(config.MAIL);
+    const transporter = nodemailer.createTransport({
+        pool: true,
+        host: process.env.TESTIT_MAIL_HOST,
+        auth: {
+            user: process.env.TESTIT_MAIL_USER,
+            password: process.env.TESTIT_MAIL_PASSWORD
+        }
+    });
 
     module.exports.send = (to, subject, html) => {
         var mailOptions = {
-            from: config.MAIL_SENDER,
+            from: process.env.TESTIT_MAIL_SENDER,
             to: to,
             subject: subject,
             html: html

@@ -21,9 +21,8 @@
 //SOFTWARE.
 (function() {
     'use strict';
-    const config = require('./config');
     const ilogger = require('proxey-ilogger');
-    ilogger.setLevel(ilogger.Level[config.LOG_LEVEL]);
+    ilogger.setLevel(ilogger.Level[process.env.TESTIT_LOG_LEVEL]);
 
     require('./persistence');
     require('./server');

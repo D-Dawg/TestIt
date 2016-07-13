@@ -23,11 +23,10 @@
     'use strict';
     const Promise = require('bluebird');
     const bcrypt = require('bcrypt-nodejs');
-    const config = require('./config');
 
     let genSalt = () => {
         return new Promise(resolve => {
-            bcrypt.genSalt(config.BCRYPT_ROUNDS, (e, data) => resolve(data));
+            bcrypt.genSalt(process.env.TESTIT_BCRYPT_ROUNDS, (e, data) => resolve(data));
         });
     };
 

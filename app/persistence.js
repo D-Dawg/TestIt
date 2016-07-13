@@ -23,13 +23,12 @@
     'use strict';
     const mongoose = require('mongoose');
     const logger = require('proxey-ilogger')('Persistence');
-    const config = require('./config');
 
     mongoose.Promise = require('bluebird');
 
     logger.info(`connecting`);
     let connect = () => {
-        mongoose.connect(config.MONGODB_URL);
+        mongoose.connect(process.env.TESTIT_MONGODB_URL);
     };
     mongoose.connection.on('error', err => {
         logger.error('connection error: ' + err);

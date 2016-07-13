@@ -6,3 +6,4 @@ app/config.json
 src/out
 bower
 www/assets
+env.list

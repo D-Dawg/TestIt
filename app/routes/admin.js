@@ -28,7 +28,6 @@
     const logger = require('proxey-ilogger')('UserEdit');
     const template = require('../enum/template');
     const mailer = require('../mailer');
-    const config = require('../config');
     let router = require('express').Router();
 
 

@@ -47,5 +47,8 @@
         } else {
             logger.info('admin user already exists');
         }
+        setTimeout(() => {
+            process.exit(0);
+        }, 2000);
     })();
 })();
