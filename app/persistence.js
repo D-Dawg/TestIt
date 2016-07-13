@@ -28,7 +28,9 @@
 
     logger.info(`connecting`);
     let connect = () => {
-        mongoose.connect(process.env.TESTIT_MONGODB_URL);
+        let url = 'mongodb://' + process.env[process.env.TESTIT_MONGODB_HOST_ENV_PROPERTY] + '/' + process.env.TESTIT_MONGODB_DATABASE;
+        logger.info('connecting to ' + url);
+        mongoose.connect(url);
     };
     mongoose.connection.on('error', err => {
         logger.error('connection error: ' + err);
