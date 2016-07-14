@@ -1,7 +1,8 @@
 testit.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
+        'use strict';
 
-        $urlRouterProvider.otherwise("/templates");
+        $urlRouterProvider.otherwise('/templates');
 
 
         $stateProvider
@@ -30,5 +31,5 @@ testit.config(['$stateProvider', '$urlRouterProvider',
             }).state('administration.settings', {
                 url: '/settings',
                 templateUrl: '/templates/views/administration/settings.html'
-            })
+            });
     }]);

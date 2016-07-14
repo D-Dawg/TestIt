@@ -1,0 +1,9 @@
+.idea
+**/node_modules
+**/bower_components
+**/.sass-cache
+app/config.json
+src/out
+bower
+www/assets
+env.list

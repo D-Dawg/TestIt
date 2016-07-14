@@ -24,6 +24,7 @@
     const ilogger = require('proxey-ilogger');
     ilogger.setLevel(ilogger.Level[process.env.TESTIT_LOG_LEVEL]);
 
+    require('./setup').run();
     require('./persistence');
     require('./server');
 })();

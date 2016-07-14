@@ -32,7 +32,7 @@
         host: process.env.TESTIT_MAIL_HOST,
         auth: {
             user: process.env.TESTIT_MAIL_USER,
-            password: process.env.TESTIT_MAIL_PASSWORD
+            pass: process.env.TESTIT_MAIL_PASSWORD
         }
     });
 

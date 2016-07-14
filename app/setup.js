@@ -21,16 +21,15 @@
 //SOFTWARE.
 (function () {
     'use strict';
-    require('./app/persistence'); //connect mongodb and load promise library
-    const crypto = require('./app/crypto');
-    const User = require('./app/models/User');
+    require('./persistence'); //connect mongodb and load promise library
+    const crypto = require('./crypto');
+    const User = require('./models/User');
     const Promise = require('bluebird');
-    const logger = require('proxey-ilogger')('Install');
-    const mailer = require('./app/mailer');
-    const config = require('./app/config');
-    const permission = require('./app/enum/permission');
+    const logger = require('proxey-ilogger')('Setup');
+    const mailer = require('./mailer');
+    const permission = require('./enum/permission');
 
-    Promise.coroutine(function*() {
+    module.exports.run = Promise.coroutine(function*() {
         let data = yield User.findOne({user: 'admin'});
         if(data === null) {
             logger.info('admin user doesn\'t exists! creating one');
@@ -38,17 +37,14 @@
             let user = new User({
                 user: 'admin',
                 name: 'Administrator',
-                email: config.ADMIN_EMAIL,
+                email: process.env.TESTIT_ADMIN_EMAIL,
                 password: yield crypto.encrypt(password),
                 permissions: Object.keys(permission)
             });
             yield user.save();
-            mailer.send(config.ADMIN_EMAIL, 'Admin Account Created', password);
+            mailer.send(process.env.TESTIT_ADMIN_EMAIL, 'Admin Account Created', password);
         } else {
             logger.info('admin user already exists');
         }
-        setTimeout(() => {
-            process.exit(0);
-        }, 2000);
-    })();
+    });
 })();

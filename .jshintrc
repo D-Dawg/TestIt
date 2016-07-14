@@ -62,7 +62,7 @@
 
   // Environments
   "browser"       : true,     // Web Browser (window, document, etc)
-  "jquery"        : false,    // jQuery
+  "jquery"        : true,    // jQuery
   "mocha"         : true,     // Mocha
   "node"          : true,    // Node.js
 
