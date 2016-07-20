@@ -12,11 +12,17 @@ testit.config(['$stateProvider', '$urlRouterProvider',
                     nav: {templateUrl: '/templates/nav.html'},
                     main: {templateUrl: '/templates/views/templates.html'}
                 }
+            }).state('tests', {
+                url: '/tests',
+                views: {
+                    nav: {templateUrl: '/templates/nav.html'},
+                    main: {templateUrl: '/templates/views/tests.html'}
+                }
             }).state('account', {
                 url: '/account',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/account.html'}
+                    main: {templateUrl: '/templates/views/account.html', controller: 'AccountController'}
                 }
             }).state('administration', {
                 url: '/administration',

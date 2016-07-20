@@ -2,7 +2,7 @@ testit.controller('MainController', ['$scope', '$http', function ($scope, $http)
     'use strict';
 
     $http.get('/personal/session').then(response => {
-        $scope.session = response.data;
+        $scope.me = response.data.me;
 
         $scope.permissions = {};
         for(let i = 0; i < response.data.permissions.length; i++) {

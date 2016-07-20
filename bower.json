@@ -24,6 +24,8 @@
     "angular-cookies": "^1.5.7",
     "moment": "^2.14.1",
     "angular-ui-router": "^0.3.1",
-    "angular-animate": "^1.5.7"
+    "angular-animate": "^1.5.7",
+    "bluebird": "^3.4.1",
+    "babel-polyfill": "^0.0.1"
   }
 }

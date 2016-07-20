@@ -38,7 +38,9 @@
                         'bower/angular-animate/angular-animate.min.js',
                         'bower/angular-ui-router/release/angular-ui-router.min.js',
                         'bower/sweetalert2/dist/sweetalert2.min.js',
-                        'bower/moment/min/moment-with-locales.min.js'
+                        'bower/moment/min/moment-with-locales.min.js',
+                        'bower/bluebird/js/browser/bluebird.min.js',
+                        'bower/babel-polyfill/browser-polyfill.js'
                     ],
                     dest: 'www/assets/testit-dependencies.min.js'
                 },

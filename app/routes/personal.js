@@ -39,5 +39,10 @@
         });
     });
 
+
+    router.post('/changePassword', function(req, res) {
+        //TODO: implement
+    });
+
     module.exports = router;
 })();
