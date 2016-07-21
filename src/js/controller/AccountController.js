@@ -1,4 +1,4 @@
-testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promise', 'swal', function ($scope, $http, $rootScope, Promise, swal) {
+testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage) {
     'use strict';
 
     $scope.changePassword = {
@@ -6,7 +6,7 @@ testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promis
         newPassword1: '',
         newPassword2: '',
         loading: false,
-        cancel: function() {
+        reset: function() {
             this.oldPassword = '';
             this.newPassword1 ='';
             this.newPassword2 = '';
@@ -19,12 +19,17 @@ testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promis
                         newPassword1: this.newPassword1,
                         newPassword2: this.newPassword2
                     });
-                    console.log(response);
+                    if(typeof response.data === "object" && response.data.success === true) {
+                        successMessage('Your password was successfully changed');
+                        this.reset();
+                    } else {
+                        errorMessage('The entered password was incorrect');
+                    }
                 } else {
-                    swal('', 'The new passwords don\'t match', 'error');
+                    errorMessage('The new passwords don\'t match');
                 }
             } else {
-                swal('', 'The new password must not be empty', 'error');
+                errorMessage('The new password must not be empty');
             }
         })
     };

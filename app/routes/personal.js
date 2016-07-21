@@ -40,9 +40,24 @@
     });
 
 
-    router.post('/changePassword', function(req, res) {
-        //TODO: implement
-    });
+    router.post('/changePassword', Promise.coroutine(function*(req, res) {
+        if(typeof req.body === "object" && typeof req.body.oldPassword === "string" && typeof req.body.newPassword1 === "string") {
+            let user = yield User.findOne({user: req.user.user});
+            if(user !== null) {
+                if((yield crypto.matches(req.body.oldPassword, user.password)) === true) {
+                    user.password = yield crypto.encrypt(req.body.newPassword1);
+                    yield user.save();
+                    res.send({success: true});
+                } else {
+                    res.send({success: false});
+                }
+            } else {
+                res.send({success: false});
+            }
+        } else {
+            res.send({success: false});
+        }
+    }));
 
     module.exports = router;
 })();

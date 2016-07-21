@@ -26,6 +26,7 @@
     const Promise = require('bluebird');
     const cookieParser = require('cookie-parser');
     const bodyParser = require('body-parser');
+    const compression = require('compression');
     const path = require('path');
     const requiresPermission = require('./routes/middleware/requires-permission');
     const requiresLogin = require('./routes/middleware/requires-login');
@@ -37,6 +38,7 @@
     const app = express();
     app.use(cookieParser());
     app.use(bodyParser.json());
+    app.use(compression());
     app.use('/', express.static(path.join(WEBROOT)));
     app.use('/auth', require('./routes/auth'));
     app.use('/admin', requiresPermission(permission.ADMINISTRATION), require('./routes/admin'));
