@@ -19,7 +19,7 @@ testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promis
                         newPassword1: this.newPassword1,
                         newPassword2: this.newPassword2
                     });
-                    if(typeof response.data === "object" && response.data.success === true) {
+                    if(typeof response.data === 'object' && response.data.success === true) {
                         successMessage('Your password was successfully changed');
                         this.reset();
                         $scope.$apply();

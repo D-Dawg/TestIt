@@ -41,7 +41,7 @@
 
 
     router.post('/changePassword', Promise.coroutine(function*(req, res) {
-        if(typeof req.body === "object" && typeof req.body.oldPassword === "string" && typeof req.body.newPassword1 === "string") {
+        if(typeof req.body === 'object' && typeof req.body.oldPassword === 'string' && typeof req.body.newPassword1 === 'string') {
             let user = yield User.findOne({user: req.user.user});
             if(user !== null) {
                 if((yield crypto.matches(req.body.oldPassword, user.password)) === true) {
