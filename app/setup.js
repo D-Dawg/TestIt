@@ -46,5 +46,6 @@
         } else {
             logger.info('admin user already exists');
         }
+        logger.info('setup finished');
     });
 })();
