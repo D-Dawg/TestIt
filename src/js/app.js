@@ -1,1 +1,1 @@
-var testit = angular.module('testit', ['ui.router', 'ngAnimate']);
+var testit = angular.module('testit', ['ui.router', 'ngAnimate', 'ngMaterial', 'ngMdIcons']);

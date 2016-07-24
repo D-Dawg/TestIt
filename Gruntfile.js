@@ -30,6 +30,7 @@
             },
             concat: {
                 deps: {
+                    nonull: true,
                     src: [
                         'bower/jquery/dist/jquery.min.js',
                         'bower/Materialize/dist/js/materialize.min.js',
@@ -37,6 +38,10 @@
                         'bower/angular-cookies/angular-cookies.min.js',
                         'bower/angular-animate/angular-animate.min.js',
                         'bower/angular-ui-router/release/angular-ui-router.min.js',
+                        'bower/angular-material/angular-material.min.js',
+                        'bower/angular-messages/angular-messages.min.js',
+                        'bower/angular-material-icons/angular-material-icons.min.js',
+                        'bower/angular-aria/angular-aria.min.js',
                         'bower/sweetalert2/dist/sweetalert2.min.js',
                         'bower/moment/min/moment-with-locales.min.js',
                         'bower/bluebird/js/browser/bluebird.min.js',

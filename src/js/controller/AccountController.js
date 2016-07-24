@@ -1,6 +1,7 @@
-testit.controller('AccountController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage) {
+testit.controller('AccountController',
+    ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage',
+        function ($scope, $http, $rootScope, Promise, errorMessage, successMessage) {
     'use strict';
-
     $scope.changePassword = {
         oldPassword: '',
         newPassword1: '',

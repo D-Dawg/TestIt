@@ -1,4 +1,10 @@
-testit.factory('successMessage', ['swal', function(swal) {
+testit.factory('successMessage', ['$mdDialog', function ($mdDialog) {
     'use strict';
-    return message => swal('', message, 'success');
+    return message => {
+        $mdDialog.show($mdDialog.alert({
+            title: 'Yippie!',
+            textContent: message,
+            ok: 'Close'
+        }));
+    };
 }]);

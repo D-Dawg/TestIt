@@ -1,4 +1,10 @@
-testit.factory('errorMessage', ['swal', function(swal) {
+testit.factory('errorMessage', ['$mdDialog', function($mdDialog) {
     'use strict';
-    return message => swal('', message, 'error');
+    return message => {
+        $mdDialog.show($mdDialog.alert({
+            title: 'Oh no!',
+            textContent: message,
+            ok: 'Close'
+        }));
+    };
 }]);

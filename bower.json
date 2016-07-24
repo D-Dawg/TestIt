@@ -26,6 +26,11 @@
     "angular-ui-router": "^0.3.1",
     "angular-animate": "^1.5.7",
     "bluebird": "^3.4.1",
-    "babel-polyfill": "^0.0.1"
+    "babel-polyfill": "^0.0.1",
+    "angular-material": "^1.0.9",
+    "angular-material-icons": "^0.7.1"
+  },
+  "resolutions": {
+    "angular": "^1.5.7"
   }
 }

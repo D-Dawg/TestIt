@@ -10,7 +10,7 @@ testit.config(['$stateProvider', '$urlRouterProvider',
                 url: '/templates',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/templates.html'}
+                    main: {templateUrl: '/templates/views/templates.html', controller: 'TemplatesController'}
                 }
             }).state('tests', {
                 url: '/tests',
