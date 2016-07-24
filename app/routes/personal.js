@@ -25,7 +25,7 @@
     const User = require('../models/User');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');
-    const logger = require('proxey-ilogger')('Personal');
+    const logger = require('proxey-ilogger')('Route:Personal');
     const template = require('../enum/template');
     const mailer = require('../mailer');
     const permission = require('../enum/permission');

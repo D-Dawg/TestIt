@@ -23,20 +23,30 @@
     'use strict';
     const Promise = require('bluebird');
     const User = require('../models/User');
+    const Template = require('../models/Template');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');
-    const logger = require('proxey-ilogger')('Route:UserEdit');
+    const logger = require('proxey-ilogger')('Route:Template');
     const template = require('../enum/template');
     const mailer = require('../mailer');
+    const permission = require('../enum/permission');
+    const requiresPermission = require('./middleware/requires-permission');
     let router = require('express').Router();
 
 
-    router.get('/user/:user', Promise.coroutine(function*(req, res) {
-        res.send(yield User.findOne({user: req.params.user}).select('user email name permissions'));
+    router.get('/all', Promise.coroutine(function* (req, res) {
+        res.send(yield Template.find());
     }));
 
-    router.get('/users',  Promise.coroutine(function*(req, res) {
-        res.send(yield User.find().sort('-user').select('user email name permissions'));
+    router.put('/', requiresPermission(permission.EDIT_TEMPLATE),  Promise.coroutine(function*(req, res) {
+        if (typeof req.body === 'object' && typeof req.body.name === "string") {
+            let template = new Template({
+                name: req.body.name
+            });
+            res.send(yield template.save());
+        } else {
+            res.sendStatus(400);
+        }
     }));
 
 

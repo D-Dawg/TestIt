@@ -25,7 +25,7 @@
     const User = require('../models/User');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');
-    const logger = require('proxey-ilogger')('Auth');
+    const logger = require('proxey-ilogger')('Route:Auth');
     const template = require('../enum/template');
     const mailer = require('../mailer');
     let router = require('express').Router();
