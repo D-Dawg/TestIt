@@ -6,11 +6,18 @@ testit.config(['$stateProvider', '$urlRouterProvider',
 
 
         $stateProvider
-        .state('templates', {
+            .state('templates', {
                 url: '/templates',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
                     main: {templateUrl: '/templates/views/templates.html', controller: 'TemplatesController'}
+                }
+            })
+            .state('template', {
+                url: '/template/:id',
+                views: {
+                    nav: {templateUrl: '/templates/nav.html'},
+                    main: {templateUrl: '/templates/views/template.html', controller: 'TemplateController'}
                 }
             }).state('tests', {
                 url: '/tests',

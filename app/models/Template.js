@@ -24,8 +24,12 @@
     const mongoose = require('mongoose');
 
     module.exports = mongoose.model('Template', {
-        title: {
+        name: {
             type: String
+        },
+        lastModified: {
+            type: Date,
+            default: Date.now
         },
         presets: [],
         features: [],

@@ -39,7 +39,7 @@
     }));
 
     router.put('/', requiresPermission(permission.EDIT_TEMPLATE),  Promise.coroutine(function*(req, res) {
-        if (typeof req.body === 'object' && typeof req.body.name === "string") {
+        if (typeof req.body === 'object' && typeof req.body.name === 'string') {
             let template = new Template({
                 name: req.body.name
             });
