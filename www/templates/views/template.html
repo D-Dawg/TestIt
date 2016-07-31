@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <md-toolbar ng-show="template.loading" layout-padding>
+                <p>
+                    <i class="fa fa-spin fa-spinner"></i> Loading template...
+                </p>
+            </md-toolbar>
+            <div ng-hide="template.loading">
+                <h1>Template {{ template.template.name }}</h1>
+                <button ng-click="template.editing = true" ng-hide="template.editing">Edit!</button>
+                <button ng-show="template.wasModified" ng-disabled="template.saving"
+                        ng-click="template.discardChanges()"><i class="fa"
+                                                                ng-class="{'fa-remove': !template.saving, 'fa-spinner fa-spin': template.saving}"></i>
+                    Discard Changes
+                </button>
+                <button ng-show="template.wasModified" ng-disabled="template.saving" ng-click="template.saveChanges()">
+                    <i class="fa" ng-class="{'fa-save': !template.saving, 'fa-spinner fa-spin': template.saving}"></i>
+                    Save Changes
+                </button>
+                <button ng-show="template.editing && !template.wasModified" ng-click="template.editing = false">Stop
+                    Editing
+                </button>
+
+                <button ng-click="template.addFeature(0)" class="text-center" ng-show="template.editing">Add feature
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-repeat="feature in template.template.features track by $index">
+        <div class="card">
+            <div class="card-content">
+                        <span ng-show="template.editing">
+                           <i class="fa fa-chevron-circle-up"
+                              ng-click="template.move(template.template.features, $index, $index - 1)"
+                              ng-show="$index > 0"></i>
+                    <i class="fa fa-chevron-circle-down"
+                       ng-click="template.move(template.template.features, $index, $index + 1)"
+                       ng-show="$index < template.template.features.length"></i>
+                            <i class="fa fa-remove"
+                       ng-click="template.template.features.splice($index, 1)"></i>
+                    </span>
+
+                <h5>Feature: <span ng-bind="feature.name"></span></h5>
+                <input ng-model="feature.name" ng-disabled="!template.editing">
+            </div>
+        </div>
+        <div style="text-align: center">
+            <a class="btn-floating btn-large waves-effect waves-light indigo center" aria-label="Add new feature"
+               style="text-align: center" ng-click="template.addFeature($index + 1)" ng-show="template.editing">
+                <ng-md-icon icon="add"></ng-md-icon>
+            </a>
+        </div>
+    </div>
+</div>

@@ -38,11 +38,28 @@
         res.send(yield Template.find());
     }));
 
+
+    router.get('/:id', Promise.coroutine(function* (req, res) {
+        res.send(yield Template.findOne({_id: req.params.id}));
+    }));
+
     router.put('/', requiresPermission(permission.EDIT_TEMPLATE),  Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object' && typeof req.body.name === 'string') {
             let template = new Template({
                 name: req.body.name
             });
+            res.send(yield template.save());
+        } else {
+            res.sendStatus(400);
+        }
+    }));
+
+    router.post('/', requiresPermission(permission.EDIT_TEMPLATE), Promise.coroutine(function*(req, res) {
+        if (typeof req.body === 'object') {
+            let template = yield Template.findById(req.body._id);
+            delete req.body._id;
+            delete req.body.__v;
+            template.set(req.body);
             res.send(yield template.save());
         } else {
             res.sendStatus(400);
