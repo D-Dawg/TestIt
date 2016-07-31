@@ -15,29 +15,29 @@ $tabs-bg-color: #3f51b5;
 @import "mixins";
 
 body {
-  background-size: contain;
-  background: url(/assets/background.png) no-repeat fixed;
+//    background-size: auto;
+//    background: url(/assets/background.png) no-repeat fixed;
 }
 
 @media screen and (min-width: 600px) {
-  .login-container {
-    padding-top: 100px;
-  }
+    .login-container {
+        padding-top: 100px;
+    }
 }
 
 .main-view {
-  &.ng-enter {
-    & {
-      @include effect(fadeInDown);
+    &.ng-enter {
+        & {
+            @include effect(fadeInDown);
+        }
     }
-  }
-  &.ng-leave {
-    & {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      @include effect(fadeOutDown);
+    &.ng-leave {
+        & {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            @include effect(fadeOutDown);
+        }
     }
-  }
 }
