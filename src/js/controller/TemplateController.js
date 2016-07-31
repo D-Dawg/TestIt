@@ -2,8 +2,8 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
     'use strict';
 
     window.onbeforeunload = function (e) {
-        if ($scope.template.wasModified) {
-            return 'Your changes have not been saved';
+        if ($scope.template.wasModified || $scope.template.editing) {
+            return 'You are still in edit mode';
         }
         return null;
     };
@@ -39,9 +39,18 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
         }),
         addFeature: function(index) {
             this.template.features.splice(index, 0, {
-                name: "My Feature",
+                name: "Feature Name",
                 sections: []
             });
+        },
+        addSection: function(sections, index) {
+            sections.splice(index || 0, 0, {
+                name: "Section Name",
+                items: []
+            });
+        },
+        addItem: function(items, index) {
+            items.splice(index || 0, 0, "Item");
         },
         move: function(arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
@@ -57,9 +66,9 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
     $scope.template.load();
 
     var removeStateChangeListener = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-        if($scope.template.wasModified) {
+        if($scope.template.wasModified || $scope.template.editing) {
             event.preventDefault();
-            errorMessage('You have unsaved changes. Save or discard them first');
+            errorMessage('You are still in editmode. Save or discard your changes first');
         }
     });
 

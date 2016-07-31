@@ -31,24 +31,51 @@
     <div ng-repeat="feature in template.template.features track by $index">
         <div class="card">
             <div class="card-content">
-                        <span ng-show="template.editing">
+                <h4>
+                     <span ng-show="template.editing">
                            <i class="fa fa-chevron-circle-up"
                               ng-click="template.move(template.template.features, $index, $index - 1)"
                               ng-show="$index > 0"></i>
                     <i class="fa fa-chevron-circle-down"
                        ng-click="template.move(template.template.features, $index, $index + 1)"
-                       ng-show="$index < template.template.features.length"></i>
+                       ng-show="$index < template.template.features.length - 1"></i>
                             <i class="fa fa-remove"
-                       ng-click="template.template.features.splice($index, 1)"></i>
+                               ng-click="template.template.features.splice($index, 1)"></i>
                     </span>
-
-                <h5>Feature: <span ng-bind="feature.name"></span></h5>
+                    Feature: <span ng-bind="feature.name"></span>
+                </h4>
                 <input ng-model="feature.name" ng-disabled="!template.editing">
+                <button ng-click="template.addSection(feature.sections, 0)" ng-show="template.editing">Add Section</button>
+
+
+                <div ng-repeat="section in feature.sections track by $index">
+                    <hr ng-hide="$index === 0"/>
+                    <span ng-show="template.editing">
+                           <i class="fa fa-chevron-circle-up"
+                              ng-click="template.move(feature.sections, $index, $index - 1)"
+                              ng-show="$index > 0"></i>
+                    <i class="fa fa-chevron-circle-down"
+                       ng-click="template.move(feature.sections, $index, $index + 1)"
+                       ng-show="$index < template.template.features.length - 1"></i>
+                    <i class="fa fa-remove"
+                       ng-click="feature.sections.splice($index, 1)"></i>
+                    </span>
+                    <h5 ng-bind="section.name"></h5>
+
+                    <button ng-click="template.addItem(section.items, 0)" ng-show="template.editing">Add Item</button>
+                    <table>
+                        <tbody>
+                        <tr ng-repeat="item in section.items track by $index">
+                            <td ng-bind="item" class="layout-no-padding" style="padding:0"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div style="text-align: center">
             <a class="btn-floating btn-large waves-effect waves-light indigo center" aria-label="Add new feature"
-               style="text-align: center" ng-click="template.addFeature($index + 1)" ng-show="template.editing">
+               ng-click="template.addFeature($index + 1)" ng-show="template.editing">
                 <ng-md-icon icon="add"></ng-md-icon>
             </a>
         </div>
