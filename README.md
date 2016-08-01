@@ -1,6 +1,6 @@
 #TestIt
 
-[![Build Status](https://travis-ci.org/Proxey/TestIt.svg?branch=master)](https://travis-ci.org/Proxey/TestIt)
+[![Build Status](https://travis-ci.org/Proxey/TestIt.svg?branch=master)](https://travis-ci.org/Proxey/TestIt) [![dependencies Status](https://david-dm.org/Proxey/Ilogger/status.svg)](https://david-dm.org/Proxey/TestIt)
 
 ##Build docker image
 Doesn' require any configuration or dependencies (like npm install)
