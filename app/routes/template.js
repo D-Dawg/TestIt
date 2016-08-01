@@ -59,6 +59,7 @@
             let template = yield Template.findById(req.body._id);
             delete req.body._id;
             delete req.body.__v;
+            req.body.lastModified = Date.now();
             template.set(req.body);
             res.send(yield template.save());
         } else {
