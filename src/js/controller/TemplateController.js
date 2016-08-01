@@ -39,18 +39,18 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
         }),
         addFeature: function(index) {
             this.template.features.splice(index, 0, {
-                name: "Feature Name",
+                name: 'Feature Name',
                 sections: []
             });
         },
         addSection: function(sections, index) {
             sections.splice(index || 0, 0, {
-                name: "Section Name",
+                name: 'Section Name',
                 items: []
             });
         },
         addItem: function(items, index) {
-            items.splice(index || 0, 0, "Item");
+            items.splice(index || 0, 0, 'Item');
         },
         move: function(arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
@@ -58,7 +58,7 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
     };
 
     $scope.$watch('template.template', (_new, _old) => {
-        if (_old !== null && typeof _old === "object") {
+        if (_old !== null && typeof _old === 'object') {
             $scope.template.wasModified = true;
         }
     }, true);
