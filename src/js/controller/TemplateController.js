@@ -9,6 +9,7 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
     };
 
     $scope.template = {
+        mode: 'builds',
         id: $state.params.id,
         beforeEditTemplate: null,
         template: null,

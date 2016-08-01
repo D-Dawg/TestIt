@@ -1,0 +1,74 @@
+<h2>Features
+    <md-button ng-click="template.addFeature(0)" class="text-center" ng-show="template.editing">Add feature</md-button>
+</h2>
+<div ng-repeat="feature in template.template.features track by $index">
+    <div class="card">
+        <div class="card-content">
+            <h4>
+                <span ng-show="template.editing">
+                    <i class="fa fa-chevron-circle-up"
+                       ng-click="template.move(template.template.features, $index, $index - 1)"
+                       ng-show="$index > 0"></i>
+                    <i class="fa fa-chevron-circle-down"
+                       ng-click="template.move(template.template.features, $index, $index + 1)"
+                       ng-show="$index < template.template.features.length - 1"></i>
+                    <i class="fa fa-remove"
+                       ng-click="template.template.features.splice($index, 1)"></i>
+                </span>
+                Feature: <span ng-bind="feature.name"></span>
+                <md-button class="md-raised" ng-click="template.addSection(feature.sections, 0)"
+                           ng-show="template.editing">Add Section
+                </md-button>
+            </h4>
+            <input ng-model="feature.name" ng-disabled="!template.editing">
+
+            <div ng-repeat="section in feature.sections track by $index">
+                <hr ng-hide="$index === 0"/>
+                <div layout="row">
+                    <div flex="10" ng-show="template.editing">
+                        <button class="btn-floating btn-large waves-effect waves-light indigo"
+                                ng-click="template.move(feature.sections, $index, $index - 1)"
+                                ng-show="$index > 0">
+                            <ng-md-icon icon="expand_less"></ng-md-icon>
+                        </button>
+                        <br/><br/>
+                        <button class="btn-floating btn-large waves-effect waves-light indigo"
+                                ng-click="template.move(feature.sections, $index, $index + 1)"
+                                ng-show="$index < feature.sections.length - 1">
+                            <ng-md-icon icon="expand_more"></ng-md-icon>
+                        </button>
+                    </div>
+                    <div flex="90">
+                        <h5>
+                            <span ng-bind="section.name"></span>
+                            <md-button class="md-raised" ng-click="template.addItem(section.items, 0)"
+                                       ng-show="template.editing">
+                                <ng-md-icon icon="add"></ng-md-icon>
+                                Add Item
+                            </md-button>
+                            <md-button class="md-raised" ng-click="feature.sections.splice($index, 1)"
+                                       ng-show="template.editing">
+                                <ng-md-icon icon="remove"></ng-md-icon>
+                                Delete Section
+                            </md-button>
+                        </h5>
+
+                        <table>
+                            <tbody>
+                            <tr ng-repeat="item in section.items track by $index">
+                                <td ng-bind="item" class="layout-no-padding" style="padding:0"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <a class="btn-floating btn-large waves-effect waves-light indigo center" aria-label="Add new feature"
+           ng-click="template.addFeature($index + 1)" ng-show="template.editing">
+            <ng-md-icon icon="add"></ng-md-icon>
+        </a>
+    </div>
+</div>
