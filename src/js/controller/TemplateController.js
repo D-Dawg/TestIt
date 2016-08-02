@@ -44,6 +44,12 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
                 sections: []
             });
         },
+        addBuild: function(index) {
+            this.template.builds.splice(index, 0, {
+                name: 'Build name',
+                sections: []
+            });
+        },
         addSection: function(sections, index) {
             sections.splice(index || 0, 0, {
                 name: 'Section Name',
