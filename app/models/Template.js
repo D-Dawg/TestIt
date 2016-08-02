@@ -31,7 +31,7 @@
             type: Date,
             default: Date.now
         },
-        presets: [],
+        builds: [],
         features: [],
         history: []
     });
