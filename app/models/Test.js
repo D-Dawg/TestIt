@@ -27,6 +27,9 @@
         name: {
             type: String
         },
+        assignee: {
+            type: String
+        },
         metaData: {},
         sections: [],
         comments: [],
