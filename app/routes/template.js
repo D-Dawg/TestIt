@@ -34,12 +34,12 @@
     let router = require('express').Router();
 
 
-    router.get('/all', Promise.coroutine(function* (req, res) {
+    router.get('/all', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
         res.send(yield Template.find());
     }));
 
 
-    router.get('/:id', Promise.coroutine(function* (req, res) {
+    router.get('/:id', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
         res.send(yield Template.findOne({_id: req.params.id}));
     }));
 

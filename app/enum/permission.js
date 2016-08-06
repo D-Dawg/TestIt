@@ -23,7 +23,10 @@
     'use strict';
     module.exports = {
         ADMINISTRATION: 'ADMINISTRATION',
+        VIEW_TESTS: 'VIEW_TESTS',
+        VIEW_TEMPLATE: 'VIEW_TEMPLATE',
         EDIT_TEMPLATE: 'EDIT_TEMPLATE',
-        EDIT_TEST: 'EDIT_TEST'
+        CREATE_TEST: 'CREATE_TEST',
+        ASSIGN_TEST: 'ASSIGN_TEST'
     };
 })();
