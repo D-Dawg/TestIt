@@ -1,4 +1,4 @@
-testit.directive('materializeTab', function() {
+window.testit.directive('materializeTab', function() {
     'use strict';
     return {
         restrict: 'A',

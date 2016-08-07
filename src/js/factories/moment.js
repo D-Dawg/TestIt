@@ -1,4 +1,4 @@
-testit.factory('moment', function() {
+window.testit.factory('moment', function() {
     'use strict';
     return window.moment;
 });

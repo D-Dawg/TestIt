@@ -1,4 +1,4 @@
-testit.config(['$stateProvider', '$urlRouterProvider',
+window.testit.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         'use strict';
 

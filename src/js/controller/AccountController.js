@@ -1,4 +1,4 @@
-testit.controller('AccountController',
+window.testit.controller('AccountController',
     ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage',
         function ($scope, $http, $rootScope, Promise, errorMessage, successMessage) {
     'use strict';

@@ -1,4 +1,4 @@
-testit.factory('prompt', ['$mdDialog', function ($mdDialog) {
+window.testit.factory('prompt', ['$mdDialog', function ($mdDialog) {
     'use strict';
     return message => {
         return $mdDialog.show($mdDialog.prompt({

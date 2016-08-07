@@ -1,4 +1,4 @@
-testit.controller('MainController', ['$scope', '$http', function ($scope, $http) {
+window.testit.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     'use strict';
 
     $http.get('/personal/session').then(response => {

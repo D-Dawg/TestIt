@@ -1,4 +1,4 @@
-testit.filter('momentFromNow', ['moment', function(moment) {
+window.testit.filter('momentFromNow', ['moment', function(moment) {
     'use strict';
     return date => {
         if(date) {

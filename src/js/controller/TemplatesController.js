@@ -1,4 +1,4 @@
-testit.controller('TemplatesController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt) {
+window.testit.controller('TemplatesController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt) {
     'use strict';
     $scope.templates = {
         loading: true,

@@ -1,4 +1,4 @@
-testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', '$state', '$timeout', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt, $state, $timeout) {
+window.testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', '$state', '$timeout', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt, $state, $timeout) {
     'use strict';
 
     window.onbeforeunload = function (e) {
