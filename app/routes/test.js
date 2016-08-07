@@ -36,7 +36,7 @@
 
 
     router.post('/assign', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
-        if(typeof req.body === "object" && typeof req.body._id === "string" && typeof req.body.assignee === "string") {
+        if(typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.assignee === 'string') {
             let test = yield Test.findById(req.body._id);
             if(test !== null) {
                 test.assignee = req.body.assignee;
