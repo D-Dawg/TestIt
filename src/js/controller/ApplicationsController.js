@@ -7,10 +7,10 @@ window.testit.controller('ApplicationsController', ['$scope', '$http', '$rootSco
             this.data = (yield $http.get('/application/all')).data;
             this.loading = false;
         }),
-        createTemplate: function() {
+        createApplication: function() {
             let applications = this.data;
             prompt('Enter Application name').then(function(name) {
-                $http.put('/template', {
+                $http.put('/application', {
                     name: name
                 }).success(function(data) {
                     applications.unshift(data);

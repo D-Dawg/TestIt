@@ -23,7 +23,6 @@
     'use strict';
     const Promise = require('bluebird');
     const User = require('../models/User');
-    const Template = require('../models/Template');
     const Test = require('../models/Test');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');

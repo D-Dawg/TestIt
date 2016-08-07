@@ -23,11 +23,11 @@
     'use strict';
     const Promise = require('bluebird');
     const User = require('../models/User');
-    const Template = require('../models/Template');
+    const Application = require('../models/Application');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');
     const logger = require('proxey-ilogger')('Route:Application');
-    const template = require('../enum/template');
+    const TEMPLATE = require('../enum/template');
     const mailer = require('../mailer');
     const permission = require('../enum/permission');
     const requiresPermission = require('./middleware/requires-permission');
@@ -35,20 +35,20 @@
 
 
     router.get('/all', requiresPermission(permission.VIEW_APPLICATION), Promise.coroutine(function* (req, res) {
-        res.send(yield Template.find());
+        res.send(yield Application.find());
     }));
 
 
     router.get('/:id', requiresPermission(permission.VIEW_APPLICATION), Promise.coroutine(function* (req, res) {
-        res.send(yield Template.findOne({_id: req.params.id}));
+        res.send(yield Application.findOne({_id: req.params.id}));
     }));
 
     router.put('/', requiresPermission(permission.EDIT_APPLICATION),  Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object' && typeof req.body.name === 'string') {
-            let template = new Template({
+            let application = new Application({
                 name: req.body.name
             });
-            res.send(yield template.save());
+            res.send(yield application.save());
         } else {
             res.sendStatus(400);
         }
@@ -56,12 +56,12 @@
 
     router.post('/', requiresPermission(permission.EDIT_APPLICATION), Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object') {
-            let template = yield Template.findById(req.body._id);
+            let application = yield Application.findById(req.body._id);
             delete req.body._id;
             delete req.body.__v;
             req.body.lastModified = Date.now();
-            template.set(req.body);
-            res.send(yield template.save());
+            application.set(req.body);
+            res.send(yield application.save());
         } else {
             res.sendStatus(400);
         }
