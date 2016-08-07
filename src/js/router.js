@@ -2,22 +2,22 @@ window.testit.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
-        $urlRouterProvider.otherwise('/templates');
+        $urlRouterProvider.otherwise('/applications');
 
 
         $stateProvider
-            .state('templates', {
-                url: '/templates',
+            .state('applications', {
+                url: '/applications',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/templates.html', controller: 'TemplatesController'}
+                    main: {templateUrl: '/templates/views/applications.html', controller: 'ApplicationsController'}
                 }
             })
-            .state('template', {
-                url: '/template/:id',
+            .state('application', {
+                url: '/application/:id',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/template.html', controller: 'TemplateController'}
+                    main: {templateUrl: '/templates/views/application.html', controller: 'ApplicationController'}
                 }
             }).state('tests', {
                 url: '/tests',

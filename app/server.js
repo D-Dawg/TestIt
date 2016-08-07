@@ -43,7 +43,7 @@
     app.use('/auth', require('./routes/auth'));
     app.use('/admin', requiresPermission(permission.ADMINISTRATION), require('./routes/admin'));
     app.use('/personal', requiresLogin(), require('./routes/personal'));
-    app.use('/template', requiresLogin(), require('./routes/template'));
+    app.use('/application', requiresLogin(), require('./routes/application'));
 
     app.get('/', Promise.coroutine(function*(req, res) {
         let user = yield userFromRequest(req);

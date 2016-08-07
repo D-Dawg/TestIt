@@ -1,0 +1,23 @@
+<div class="container well">
+    <div class="card">
+        <div class="card-content">
+            <a class="btn-floating btn-large waves-effect waves-light indigo right" ng-show="permissions.EDIT_APPLICATION" ng-click="applications.createApplication()"><ng-md-icon icon="add"></ng-md-icon></a>
+            <h2>Applications</h2>
+            <md-toolbar ng-show="applications.loading" layout-padding>
+                <p>
+                    <i class="fa fa-spin fa-spinner"></i> Loading applications...
+                </p>
+            </md-toolbar>
+            <table>
+                <tbody>
+                    <tr ng-repeat="application in applications.data">
+                        <td style="width: 50%"><a href="#/application/{{ application._id }}" ng-bind="application.name"></a></td>
+                        <td><span ng-bind="application.presets.length"></span> Presets</td>
+                        <td><span ng-bind="application.features.length"></span> Features</td>
+                        <td>Last updated <span ng-bind="application.lastModified | momentFromNow"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

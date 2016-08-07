@@ -3,7 +3,7 @@
         <a class="brand-logo">TestIt</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a ui-sref="tests">Tests</a></li>
-            <li ng-if="permissions.VIEW_TEMPLATE"><a ui-sref="templates">Templates</a></li>
+            <li ng-if="permissions.VIEW_APPLICATION"><a ui-sref="applications">Applications</a></li>
             <li ng-if="permissions.ADMINISTRATION"><a ui-sref="administration.users">Administration</a></li>
             <li><a ui-sref="account"><i class="fa fa-user"></i> {{me.name}}</a></li>
         </ul>

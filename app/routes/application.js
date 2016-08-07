@@ -26,7 +26,7 @@
     const Template = require('../models/Template');
     const AccessToken = require('../models/AccessToken');
     const crypto = require('../crypto');
-    const logger = require('proxey-ilogger')('Route:Template');
+    const logger = require('proxey-ilogger')('Route:Application');
     const template = require('../enum/template');
     const mailer = require('../mailer');
     const permission = require('../enum/permission');
@@ -34,16 +34,16 @@
     let router = require('express').Router();
 
 
-    router.get('/all', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
+    router.get('/all', requiresPermission(permission.VIEW_APPLICATION), Promise.coroutine(function* (req, res) {
         res.send(yield Template.find());
     }));
 
 
-    router.get('/:id', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
+    router.get('/:id', requiresPermission(permission.VIEW_APPLICATION), Promise.coroutine(function* (req, res) {
         res.send(yield Template.findOne({_id: req.params.id}));
     }));
 
-    router.put('/', requiresPermission(permission.EDIT_TEMPLATE),  Promise.coroutine(function*(req, res) {
+    router.put('/', requiresPermission(permission.EDIT_APPLICATION),  Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object' && typeof req.body.name === 'string') {
             let template = new Template({
                 name: req.body.name
@@ -54,7 +54,7 @@
         }
     }));
 
-    router.post('/', requiresPermission(permission.EDIT_TEMPLATE), Promise.coroutine(function*(req, res) {
+    router.post('/', requiresPermission(permission.EDIT_APPLICATION), Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object') {
             let template = yield Template.findById(req.body._id);
             delete req.body._id;

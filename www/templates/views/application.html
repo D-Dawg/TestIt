@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <md-toolbar ng-show="application.loading" layout-padding>
+                <p>
+                    <i class="fa fa-spin fa-spinner"></i> Loading application...
+                </p>
+            </md-toolbar>
+            <div ng-hide="application.loading">
+                <div style="float: right">
+                    <md-button class="md-raised md-warn">Delete</md-button>
+                    <md-button class="md-raised md-primary" ng-click="application.editing = true" ng-hide="application.editing">Edit</md-button>
+                    <md-button class="md-raised md-primary" ng-show="application.editing && !application.wasModified" ng-click="application.editing = false">Stop Editing</md-button>
+                    <md-button class="md-raised md-primary" ng-show="application.wasModified" ng-disabled="application.saving"
+                               ng-click="application.discardChanges()"><i class="fa"
+                                                                       ng-class="{'fa-remove': !application.saving, 'fa-spinner fa-spin': application.saving}"></i>
+                        Discard Changes
+                    </md-button>
+                    <md-button  class="md-raised md-primary" ng-show="application.wasModified" ng-disabled="application.saving"
+                               ng-click="application.saveChanges()">
+                        <i class="fa" ng-class="{'fa-save': !application.saving, 'fa-spinner fa-spin': application.saving}"></i>
+                        Save Changes
+                    </md-button>
+                </div>
+                <md-button ui-sref="applications">
+                    <ng-md-icon icon="chevron_left"></ng-md-icon>
+                    Back to applications
+                </md-button>
+                <h1>Application {{ application.application.name }}</h1>
+
+                <md-button class="md-raised md-primary" ng-click="application.mode = 'builds'" ng-disabled="application.mode === 'builds'">Builds</md-button>
+                <md-button class="md-raised md-primary" ng-click="application.mode = 'features'" ng-disabled="application.mode === 'features'">Features</md-button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-include="'/templates/views/application.builds.html'" ng-if="application.mode === 'builds'"></div>
+    <div ng-include="'/templates/views/application.features.html'" ng-if="application.mode === 'features'"></div>
+</div>
