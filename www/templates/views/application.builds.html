@@ -1,5 +1,6 @@
 <h2>Builds
     <md-button ng-click="application.addBuild(0)" class="text-center" ng-show="application.editing">Add build</md-button>
+    <md-button ng-click="application.refreshFeatures()" class="text-center" ng-show="application.editing">Refresh Features</md-button>
 </h2>
 <div ng-hide="application.application.builds.length > 0">
     <span>No builds added yet</span>
@@ -8,7 +9,12 @@
 <div class="card" ng-repeat="build in application.application.builds track by $index">
     <div class="card-content">
         <a class="btn-floating btn-large waves-effect waves-light indigo right" ng-show="permissions.EDIT_TEMPLATE" ng-click="applications.createApplication()"><ng-md-icon icon="add"></ng-md-icon></a>
-        <h2>Builds: <span ng-bind="build.name"></span></h2>
-
+        <h2>Build: <span ng-bind="build.name"></span></h2>
+        <div ng-repeat="(key, val) in build.features">
+            <md-checkbox ng-model="build.features[key]"
+                         aria-label="{{ key }}" class="md-primary" ng-disabled="!application.editing">
+                {{ key }}
+            </md-checkbox>
+        </div>
     </div>
 </div>

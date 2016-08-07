@@ -13,7 +13,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         id: $state.params.id,
         beforeEditApplication: null,
         application: null,
-        editing:  false,
+        editing: false,
         loading: false,
         saving: false,
         wasModified: false,
@@ -24,7 +24,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             this.beforeEditApplication = JSON.parse(JSON.stringify(response.data));
             this.loading = false;
         }),
-        discardChanges: function() {
+        discardChanges: function () {
             this.application = JSON.parse(JSON.stringify(this.beforeEditApplication));
             $timeout(() => {
                 this.wasModified = false;
@@ -38,29 +38,49 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             this.wasModified = false;
             $scope.$apply();
         }),
-        addFeature: function(index) {
+        addFeature: function (index) {
             this.application.features.splice(index, 0, {
                 name: 'Feature Name',
                 sections: []
             });
         },
-        addBuild: function(index) {
+        addBuild: function (index) {
             this.application.builds.splice(index, 0, {
                 name: 'Build name',
-                sections: []
+                features: {}
             });
         },
-        addSection: function(sections, index) {
+        addSection: function (sections, index) {
             sections.splice(index || 0, 0, {
                 name: 'Section Name',
                 items: []
             });
         },
-        addItem: function(items, index) {
+        addItem: function (items, index) {
             items.splice(index || 0, 0, 'Item');
         },
-        move: function(arr, fromIndex, toIndex) {
+        move: function (arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
+        },
+        refreshFeatures: function () {
+            let availableFeatures = [];
+            _.each(this.application.features, feature => {
+                availableFeatures.push(feature.name.toUpperCase().trim());
+            });
+
+            _.each(this.application.builds, build => {
+                _.each(availableFeatures, feature => {
+                    if (typeof build.features[feature] !== "boolean") {
+                        build.features[feature] = false;
+                    }
+                });
+
+                _.each(Object.keys(build.features), feature => {
+                    if (availableFeatures.indexOf(feature) === -1) {
+                        delete(build.features[feature]);
+                    }
+                });
+            });
         }
     };
 
@@ -73,7 +93,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
     $scope.application.load();
 
     let removeStateChangeListener = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-        if($scope.application.wasModified || $scope.application.editing) {
+        if ($scope.application.wasModified || $scope.application.editing) {
             event.preventDefault();
             errorMessage('You are still in editmode. Save or discard your changes first');
         }

@@ -1,7 +1,7 @@
 <h2>Features
     <md-button ng-click="application.addFeature(0)" class="text-center" ng-show="application.editing">Add feature</md-button>
 </h2>
-<div ng-hide="application.application.feature.length > 0">
+<div ng-hide="application.application.features.length > 0">
     <span>No features added yet</span>
 </div>
 <div ng-repeat="feature in application.application.features track by $index">
