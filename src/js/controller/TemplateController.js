@@ -19,7 +19,7 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
         wasModified: false,
         load: Promise.coroutine(function*() {
             this.loading = true;
-            var response = yield $http.get(`/template/${this.id}`);
+            let response = yield $http.get(`/template/${this.id}`);
             this.template = JSON.parse(JSON.stringify(response.data));
             this.beforeEditTemplate = JSON.parse(JSON.stringify(response.data));
             this.loading = false;
@@ -72,7 +72,7 @@ testit.controller('TemplateController', ['$scope', '$http', '$rootScope', 'Promi
 
     $scope.template.load();
 
-    var removeStateChangeListener = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+    let removeStateChangeListener = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
         if($scope.template.wasModified || $scope.template.editing) {
             event.preventDefault();
             errorMessage('You are still in editmode. Save or discard your changes first');

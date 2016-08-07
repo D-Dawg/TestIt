@@ -37,7 +37,7 @@
     });
 
     module.exports.send = (to, subject, html) => {
-        var mailOptions = {
+        let mailOptions = {
             from: process.env.TESTIT_MAIL_SENDER,
             to: to,
             subject: subject,

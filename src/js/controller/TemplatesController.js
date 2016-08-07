@@ -8,7 +8,7 @@ testit.controller('TemplatesController', ['$scope', '$http', '$rootScope', 'Prom
             this.loading = false;
         }),
         createTemplate: function() {
-            var templates = this.data;
+            let templates = this.data;
             prompt('Enter Template name').then(function(name) {
                 $http.put('/template', {
                     name: name
