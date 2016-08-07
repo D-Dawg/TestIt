@@ -45,7 +45,8 @@
                         'bower/sweetalert2/dist/sweetalert2.min.js',
                         'bower/moment/min/moment-with-locales.min.js',
                         'bower/bluebird/js/browser/bluebird.min.js',
-                        'bower/babel-polyfill/browser-polyfill.js'
+                        'bower/babel-polyfill/browser-polyfill.js',
+                        'bower/underscore/underscore-min.js'
                     ],
                     dest: 'www/assets/testit-dependencies.min.js'
                 },

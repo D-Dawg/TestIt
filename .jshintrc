@@ -69,6 +69,7 @@
   // Custom Globals
   "globals": {
     "testit": true,
-    "angular": true
+    "angular": true,
+    "_": true
   }
 }
