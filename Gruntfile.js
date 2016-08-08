@@ -46,7 +46,8 @@
                         'bower/moment/min/moment-with-locales.min.js',
                         'bower/bluebird/js/browser/bluebird.min.js',
                         'bower/babel-polyfill/browser-polyfill.js',
-                        'bower/underscore/underscore-min.js'
+                        'bower/underscore/underscore-min.js',
+                        'bower/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js'
                     ],
                     dest: 'www/assets/testit-dependencies.min.js'
                 },
