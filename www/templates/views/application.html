@@ -26,7 +26,7 @@
                     <ng-md-icon icon="chevron_left"></ng-md-icon>
                     Back to applications
                 </md-button>
-                <h1>Application {{ application.application.name }}</h1>
+                <h1>Application: {{ application.application.name }}</h1>
 
                 <md-button class="md-raised md-primary" ng-click="application.mode = 'builds'" ng-disabled="application.mode === 'builds'">Builds</md-button>
                 <md-button class="md-raised md-primary" ng-click="application.mode = 'features'" ng-disabled="application.mode === 'features'">Features</md-button>

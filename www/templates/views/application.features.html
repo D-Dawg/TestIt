@@ -28,20 +28,7 @@
             <div ng-repeat="section in feature.sections track by $index">
                 <hr ng-hide="$index === 0"/>
                 <div layout="row">
-                    <div flex="10" ng-show="application.editing">
-                        <button class="btn-floating btn-large waves-effect waves-light indigo"
-                                ng-click="application.move(feature.sections, $index, $index - 1)"
-                                ng-show="$index > 0">
-                            <ng-md-icon icon="expand_less"></ng-md-icon>
-                        </button>
-                        <br/><br/>
-                        <button class="btn-floating btn-large waves-effect waves-light indigo"
-                                ng-click="application.move(feature.sections, $index, $index + 1)"
-                                ng-show="$index < feature.sections.length - 1">
-                            <ng-md-icon icon="expand_more"></ng-md-icon>
-                        </button>
-                    </div>
-                    <div flex="90">
+                    <div flex="100">
                         <h5>
                             <span ng-bind="section.name"></span>
                             <md-button class="md-raised" ng-click="application.addItem(section.items, 0)"
@@ -56,13 +43,31 @@
                             </md-button>
                         </h5>
 
-                        <table>
-                            <tbody>
-                            <tr ng-repeat="item in section.items track by $index">
-                                <td ng-bind="item" class="layout-no-padding" style="padding:0"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <ul dnd-list="section.items" dnd-disable-if="!application.editing">
+                            <!-- The dnd-draggable directive makes an element draggable and will
+                                 transfer the object that was assigned to it. If an element was
+                                 dragged away, you have to remove it from the original list
+                                 yourself using the dnd-moved attribute -->
+                            <li ng-repeat="item in section.items track by $index"
+                                dnd-draggable="item"
+                                dnd-moved="section.items.splice($index, 1)"
+                                dnd-effect-allowed="move">
+                                <input ng-model="item" ng-disabled="!application.editing">
+                            </li>
+                        </ul>
+                    </div>
+                    <div flex="10" ng-show="application.editing" style="text-align: right">
+                        <button class="btn-floating btn-large waves-effect waves-light indigo"
+                                ng-click="application.move(feature.sections, $index, $index - 1)"
+                                ng-show="$index > 0">
+                            <ng-md-icon icon="expand_less"></ng-md-icon>
+                        </button>
+                        <br/><br/>
+                        <button class="btn-floating btn-large waves-effect waves-light indigo"
+                                ng-click="application.move(feature.sections, $index, $index + 1)"
+                                ng-show="$index < feature.sections.length - 1">
+                            <ng-md-icon icon="expand_more"></ng-md-icon>
+                        </button>
                     </div>
                 </div>
             </div>

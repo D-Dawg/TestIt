@@ -12,7 +12,7 @@
                 <tbody>
                     <tr ng-repeat="application in applications.data">
                         <td style="width: 50%"><a href="#/application/{{ application._id }}" ng-bind="application.name"></a></td>
-                        <td><span ng-bind="application.presets.length"></span> Presets</td>
+                        <td><span ng-bind="application.builds.length"></span> Builds</td>
                         <td><span ng-bind="application.features.length"></span> Features</td>
                         <td>Last updated <span ng-bind="application.lastModified | momentFromNow"></span></td>
                     </tr>
