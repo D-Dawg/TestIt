@@ -16,7 +16,7 @@
                        ng-click="application.move(application.application.features, $index, $index + 1)"
                        ng-show="$index < application.application.features.length - 1"></i>
                     <i class="fa fa-remove"
-                       ng-click="application.application.features.splice($index, 1); application.refreshFeatures()"></i>
+                       ng-click="application.deleteItemWithModal(application.application.features, $index); application.refreshFeatures()"></i>
                 </span>
                 Feature: <span ng-bind="feature.name"></span>
                 <md-button class="md-raised" ng-click="application.addSection(feature.sections, 0)"

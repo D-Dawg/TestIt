@@ -1,4 +1,4 @@
-window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', '$state', '$timeout', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt, $state, $timeout) {
+window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', '$state', '$timeout', '$mdDialog', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt, $state, $timeout, $mdDialog) {
     'use strict';
 
     window.onbeforeunload = function (e) {
@@ -66,10 +66,23 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         move: function (arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
         },
-        editBuildName(build, ev) {
-            prompt('Enter new build name').then(function(input) {
+        deleteItemWithModal: function (array, index, ev) {
+            let confirm = $mdDialog.confirm()
+            .title('Are you sure?')
+            .targetEvent(ev)
+            .ok('Yeah')
+            .cancel('No');
+            $mdDialog.show(confirm).then(() => array.splice(index, 1));
+        },
+        editBuildName: function (build, ev) {
+            prompt('Enter new build name').then(function (input) {
                 build.name = input;
             });
+        },
+        copyBuild: function (builds, build) {
+            let copy = JSON.parse(JSON.stringify(build));
+            build.name = build.name + ' - copy';
+            builds.splice(builds.indexOf(build), 0, copy);
         },
         refreshFeatures: function () {
             let availableFeatures = this.availableFeatures = [];

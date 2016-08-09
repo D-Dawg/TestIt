@@ -14,8 +14,9 @@
                 <th class="rotate" ng-repeat="build in application.application.builds track by $index">
                     <div><span>
                         <span ng-bind="build.name"></span>
-                        <i class="fa fa-remove" ng-click="application.application.builds.splice($index, 1)" ng-show="application.editing"></i>
+                        <i class="fa fa-remove" ng-click="application.deleteItemWithModal(application.application.builds, $index, $event)" ng-show="application.editing"></i>
                         <i class="fa fa-edit" ng-click="application.editBuildName(build)" ng-show="application.editing"></i>
+                        <i class="fa fa-copy" ng-click="application.copyBuild(application.application.builds, build)" ng-show="application.editing"></i>
                     </span></div>
                 </th>
             </tr>
