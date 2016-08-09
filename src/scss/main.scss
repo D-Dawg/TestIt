@@ -5,6 +5,8 @@ $tabs-underline-color: black;
 $tabs-text-color: white;
 $tabs-bg-color: #3f51b5;
 
+$checkbox-margin: 1px;
+
 @import "../../bower/animate.css/animate.css";
 @import "../../bower/Materialize/sass/materialize";
 @import "../../bower/sweetalert2/src/sweetalert2";
@@ -40,4 +42,31 @@ body {
             @include effect(fadeOutDown);
         }
     }
+}
+
+th.rotate {
+    /* Something you can count on */
+    height: 140px;
+    white-space: nowrap;
+}
+
+th.rotate > div {
+    transform:
+        /* Magic Numbers */
+    translate(25px, 51px)
+        /* 45 is really 360 - 45 */
+    rotate(315deg);
+    width: 30px;
+}
+th.rotate > div > span {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+}
+
+table.bordered  td {
+    border-right: 1px darkgrey solid;
+}
+
+table td {
+    padding: 5px !important;
 }

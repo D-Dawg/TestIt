@@ -17,18 +17,21 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         loading: false,
         saving: false,
         wasModified: false,
+        availableFeatures: [],
         load: Promise.coroutine(function*() {
             this.loading = true;
             let response = yield $http.get(`/application/${this.id}`);
             this.application = JSON.parse(JSON.stringify(response.data));
             this.beforeEditApplication = JSON.parse(JSON.stringify(response.data));
             this.loading = false;
+            this.refreshFeatures();
         }),
         discardChanges: function () {
             this.application = JSON.parse(JSON.stringify(this.beforeEditApplication));
             $timeout(() => {
                 this.wasModified = false;
             });
+            this.refreshFeatures();
         },
         saveChanges: Promise.coroutine(function*() {
             this.saving = true;
@@ -36,6 +39,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             yield $http.post('/application', this.application);
             this.saving = false;
             this.wasModified = false;
+            this.refreshFeatures();
             $scope.$apply();
         }),
         addFeature: function (index) {
@@ -62,15 +66,22 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         move: function (arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
         },
+        editBuildName(build, ev) {
+            prompt('Enter new build name').then(function(input) {
+                build.name = input;
+            });
+        },
         refreshFeatures: function () {
-            let availableFeatures = [];
+            let availableFeatures = this.availableFeatures = [];
             _.each(this.application.features, feature => {
-                availableFeatures.push(feature.name.toUpperCase().trim());
+                if (availableFeatures.indexOf(feature.name.toUpperCase().trim()) === -1) {
+                    availableFeatures.push(feature.name.toUpperCase().trim());
+                }
             });
 
             _.each(this.application.builds, build => {
                 _.each(availableFeatures, feature => {
-                    if (typeof build.features[feature] !== "boolean") {
+                    if (typeof build.features[feature] !== 'boolean') {
                         build.features[feature] = false;
                     }
                 });

@@ -1,5 +1,5 @@
 <h2>Features
-    <md-button ng-click="application.addFeature(0)" class="text-center" ng-show="application.editing">Add feature</md-button>
+    <md-button ng-click="application.addFeature(0); application.refreshFeatures()" class="text-center" ng-show="application.editing">Add feature</md-button>
 </h2>
 <div ng-hide="application.application.features.length > 0">
     <span>No features added yet</span>
@@ -16,7 +16,7 @@
                        ng-click="application.move(application.application.features, $index, $index + 1)"
                        ng-show="$index < application.application.features.length - 1"></i>
                     <i class="fa fa-remove"
-                       ng-click="application.application.features.splice($index, 1)"></i>
+                       ng-click="application.application.features.splice($index, 1); application.refreshFeatures()"></i>
                 </span>
                 Feature: <span ng-bind="feature.name"></span>
                 <md-button class="md-raised" ng-click="application.addSection(feature.sections, 0)"
@@ -75,7 +75,7 @@
     </div>
     <div style="text-align: center">
         <a class="btn-floating btn-large waves-effect waves-light indigo center" aria-label="Add new feature"
-           ng-click="application.addFeature($index + 1)" ng-show="application.editing">
+           ng-click="application.addFeature($index + 1); application.refreshFeatures()" ng-show="application.editing">
             <ng-md-icon icon="add"></ng-md-icon>
         </a>
     </div>

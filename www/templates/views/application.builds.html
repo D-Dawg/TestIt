@@ -5,16 +5,31 @@
 <div ng-hide="application.application.builds.length > 0">
     <span>No builds added yet</span>
 </div>
-
-<div class="card" ng-repeat="build in application.application.builds track by $index">
+<div class="card">
     <div class="card-content">
-        <a class="btn-floating btn-large waves-effect waves-light indigo right" ng-show="permissions.EDIT_TEMPLATE" ng-click="applications.createApplication()"><ng-md-icon icon="add"></ng-md-icon></a>
-        <h2>Build: <span ng-bind="build.name"></span></h2>
-        <div ng-repeat="(key, val) in build.features">
-            <md-checkbox ng-model="build.features[key]"
-                         aria-label="{{ key }}" class="md-primary" ng-disabled="!application.editing">
-                {{ key }}
-            </md-checkbox>
-        </div>
+        <table class="bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th class="rotate" ng-repeat="build in application.application.builds track by $index">
+                    <div><span>
+                        <span ng-bind="build.name"></span>
+                        <i class="fa fa-remove" ng-click="application.application.builds.splice($index, 1)" ng-show="application.editing"></i>
+                        <i class="fa fa-edit" ng-click="application.editBuildName(build)" ng-show="application.editing"></i>
+                    </span></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="feature in application.availableFeatures track by $index">
+                <td ng-bind="feature"></td>
+                <td ng-repeat="build in application.application.builds track by $index" style="text-align: center">
+                    <md-checkbox ng-model="build.features[feature]"
+                                 aria-label="{{ feature }}" class="md-primary" ng-disabled="!application.editing">
+                    </md-checkbox>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
