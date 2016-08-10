@@ -26,10 +26,19 @@
     const userFromRequest = require('./user-from-request');
     const User = require('../../models/User');
 
-    module.exports = permission => {
+    module.exports = permissions => {
+        if(typeof permissions === "string") {
+            permissions = [permissions];
+        }
         return Promise.coroutine(function*(req, res, next) {
             let user = yield userFromRequest(req);
-            if(user !== null && user.permissions.indexOf(permission) > -1) {
+            if(user !== null) {
+                for(let i = 0; i < permissions.length; i++) {
+                    if(user.permissions.indexOf(permissions[i]) === -1) {
+                        res.status(401).send({error:`permission ${permissions[i]} required`});
+                        return;
+                    }
+                }
                 req.user = user;
                 next();
             } else {
