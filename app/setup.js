@@ -28,6 +28,7 @@
     const logger = require('proxey-ilogger')('Setup');
     const mailer = require('./mailer');
     const permission = require('./enum/permission');
+    const template = require('./enum/template');
 
     module.exports.run = Promise.coroutine(function*() {
         let data = yield User.findOne({user: 'admin'});
@@ -42,7 +43,10 @@
                 permissions: Object.keys(permission)
             });
             yield user.save();
-            mailer.send(process.env.TESTIT_ADMIN_EMAIL, 'Admin Account Created', password);
+            mailer.sendWithTemplate(process.env.TESTIT_ADMIN_EMAIL, 'Admin Account Created', template.NEW_USER, {
+                user: 'admin',
+                password: password
+            });
         } else {
             logger.info('admin user already exists');
         }
