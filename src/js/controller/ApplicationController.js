@@ -53,12 +53,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true
-            })
-            .then(function (answer) {
-                    $scope.status = 'You said the information was "' + answer + '".';
-                }, function () {
-                    $scope.status = 'You cancelled the dialog.';
-                });
+            });
         },
         addFeature: function (index) {
             this.application.features.splice(index, 0, {
