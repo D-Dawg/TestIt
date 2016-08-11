@@ -1,82 +1,30 @@
 <h2>Features
-    <md-button ng-click="application.addFeature(0); application.refreshFeatures()" class="text-center" ng-show="application.editing">Add feature</md-button>
+    <md-button ng-click="application.addFeature(0); application.refreshFeatures()" class="text-center"
+               ng-show="application.editing">Add feature
+    </md-button>
 </h2>
 <div ng-hide="application.application.features.length > 0">
     <span>No features added yet</span>
 </div>
-<div ng-repeat="feature in application.application.features track by $index">
-    <div class="card">
-        <div class="card-content">
-            <h4>
-                <span ng-show="application.editing">
-                    <i class="fa fa-chevron-circle-up"
-                       ng-click="application.move(application.application.features, $index, $index - 1)"
-                       ng-show="$index > 0"></i>
-                    <i class="fa fa-chevron-circle-down"
-                       ng-click="application.move(application.application.features, $index, $index + 1)"
-                       ng-show="$index < application.application.features.length - 1"></i>
-                    <i class="fa fa-remove"
-                       ng-click="application.deleteItemWithModal(application.application.features, $index); application.refreshFeatures()"></i>
-                </span>
-                Feature: <span ng-bind="feature.name"></span>
-                <md-button class="md-raised" ng-click="application.addSection(feature.sections, 0)"
-                           ng-show="application.editing">Add Section
-                </md-button>
-            </h4>
-            <input ng-model="feature.name" ng-disabled="!application.editing">
-
-            <div ng-repeat="section in feature.sections track by $index">
-                <hr ng-hide="$index === 0"/>
-                <div layout="row">
-                    <div flex="100">
-                        <h5>
-                            <span ng-bind="section.name"></span>
-                            <md-button class="md-raised" ng-click="application.addItem(section.items, 0)"
-                                       ng-show="application.editing">
-                                <ng-md-icon icon="add"></ng-md-icon>
-                                Add Item
-                            </md-button>
-                            <md-button class="md-raised" ng-click="feature.sections.splice($index, 1)"
-                                       ng-show="application.editing">
-                                <ng-md-icon icon="remove"></ng-md-icon>
-                                Delete Section
-                            </md-button>
-                        </h5>
-
-                        <ul dnd-list="section.items" dnd-disable-if="!application.editing">
-                            <!-- The dnd-draggable directive makes an element draggable and will
-                                 transfer the object that was assigned to it. If an element was
-                                 dragged away, you have to remove it from the original list
-                                 yourself using the dnd-moved attribute -->
-                            <li ng-repeat="item in section.items track by $index"
-                                dnd-draggable="item"
-                                dnd-moved="section.items.splice($index, 1)"
-                                dnd-effect-allowed="move">
-                                <input ng-model="item" ng-disabled="!application.editing">
-                            </li>
-                        </ul>
-                    </div>
-                    <div flex="10" ng-show="application.editing" style="text-align: right">
-                        <button class="btn-floating btn-large waves-effect waves-light indigo"
-                                ng-click="application.move(feature.sections, $index, $index - 1)"
-                                ng-show="$index > 0">
-                            <ng-md-icon icon="expand_less"></ng-md-icon>
-                        </button>
-                        <br/><br/>
-                        <button class="btn-floating btn-large waves-effect waves-light indigo"
-                                ng-click="application.move(feature.sections, $index, $index + 1)"
-                                ng-show="$index < feature.sections.length - 1">
-                            <ng-md-icon icon="expand_more"></ng-md-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="text-align: center">
-        <a class="btn-floating btn-large waves-effect waves-light indigo center" aria-label="Add new feature"
-           ng-click="application.addFeature($index + 1); application.refreshFeatures()" ng-show="application.editing">
-            <ng-md-icon icon="add"></ng-md-icon>
-        </a>
+<div class="card">
+    <div class="card-content">
+        <ul dnd-list="application.application.features" dnd-disable-if="!application.editing">
+            <!-- The dnd-draggable directive makes an element draggable and will
+                 transfer the object that was assigned to it. If an element was
+                 dragged away, you have to remove it from the original list
+                 yourself using the dnd-moved attribute -->
+            <li ng-repeat="feature in application.application.features track by $index"
+                dnd-draggable="feature"
+                dnd-moved="application.application.features.splice($index, 1)"
+                dnd-effect-allowed="move">
+                <i class="fa fa-arrows" ng-show="application.editing"></i>
+                <a ng-click="application.showFeature(feature)" class="pointer">
+                    Feature: <span ng-bind="feature.name"></span>
+                </a>
+                <md-button class="md-primary md-raised" ng-click="application.deleteItemWithModal(application.application.features, $index)" style="float: right">Remove Feature</md-button>
+                <br />
+                <br />
+            </li>
+        </ul>
     </div>
 </div>

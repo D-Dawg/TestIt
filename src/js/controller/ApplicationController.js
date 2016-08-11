@@ -42,6 +42,24 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             this.refreshFeatures();
             $scope.$apply();
         }),
+        showFeature: function (feature, ev) {
+            var that = this;
+            $mdDialog.show({
+                controller: ['$scope', (_$scope) => {
+                    _$scope.feature = feature;
+                    _$scope.application = that;
+                }],
+                templateUrl: '/templates/dialogs/feature-dialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            })
+            .then(function (answer) {
+                    $scope.status = 'You said the information was "' + answer + '".';
+                }, function () {
+                    $scope.status = 'You cancelled the dialog.';
+                });
+        },
         addFeature: function (index) {
             this.application.features.splice(index, 0, {
                 name: 'Feature Name',
@@ -65,14 +83,6 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         },
         move: function (arr, fromIndex, toIndex) {
             arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
-        },
-        deleteItemWithModal: function (array, index, ev) {
-            let confirm = $mdDialog.confirm()
-            .title('Are you sure?')
-            .targetEvent(ev)
-            .ok('Yeah')
-            .cancel('No');
-            $mdDialog.show(confirm).then(() => array.splice(index, 1));
         },
         editBuildName: function (build, ev) {
             prompt('Enter new build name').then(function (input) {
@@ -104,6 +114,16 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
                         delete(build.features[feature]);
                     }
                 });
+            });
+        },
+        deleteItemWithModal: function (array, index, ev) {
+            let confirm = $mdDialog.confirm()
+            .title('Are you sure?')
+            .targetEvent(ev)
+            .ok('Yeah')
+            .cancel('No');
+            $mdDialog.show(confirm).then(() => {
+                array.splice(index, 1);
             });
         }
     };
