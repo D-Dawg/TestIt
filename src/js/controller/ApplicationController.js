@@ -43,7 +43,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             $scope.$apply();
         }),
         showFeature: function (feature, ev) {
-            var that = this;
+            let that = this;
             $mdDialog.show({
                 controller: ['$scope', (_$scope) => {
                     _$scope.feature = feature;
