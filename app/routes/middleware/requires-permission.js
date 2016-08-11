@@ -27,7 +27,7 @@
     const User = require('../../models/User');
 
     module.exports = permissions => {
-        if(typeof permissions === "string") {
+        if(typeof permissions === 'string') {
             permissions = [permissions];
         }
         return Promise.coroutine(function*(req, res, next) {
