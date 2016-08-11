@@ -21,11 +21,27 @@
 //SOFTWARE.
 (function() {
     'use strict';
-    const ilogger = require('proxey-ilogger');
-    ilogger.setLevel(ilogger.Level[process.env.TESTIT_LOG_LEVEL]);
 
-    require('./persistence');
-    require('./plugin-manager');
-    require('./setup').run();
-    require('./server');
+    let NOOPPlugin = function() {
+        this._actions = [];
+    };
+
+    /**
+     * @returns {Array}
+     */
+    NOOPPlugin.prototype.getActions = function() {
+        return this._actions;
+    };
+
+    /**
+     * @returns {Promise}
+     */
+    NOOPPlugin.prototype.onAction = function(action, data) {
+        return new Promise(resolve => {
+            process.nextTick(resolve);
+        });
+    };
+
+
+    module.exports = new NOOPPlugin();
 })();

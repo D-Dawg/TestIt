@@ -21,11 +21,23 @@
 //SOFTWARE.
 (function() {
     'use strict';
-    const ilogger = require('proxey-ilogger');
-    ilogger.setLevel(ilogger.Level[process.env.TESTIT_LOG_LEVEL]);
+    const Promise = require('bluebird');
+    const fs = Promise.promisifyAll(require('fs-extra'));
+    const path = require('path');
+    const logger = require('proxey-ilogger')('PluginManager');
+    const _ = require('underscore');
 
-    require('./persistence');
-    require('./plugin-manager');
-    require('./setup').run();
-    require('./server');
+    const PLUGIN_DIR = path.join(__dirname, "..", "plugins");
+
+    let _loadedPlugins = [];
+
+    let _loadPlugins = Promise.coroutine(function*() {
+        let plugins = yield fs.readdirAsync(PLUGIN_DIR);
+        _.each(plugins, plugin => {
+            _loadedPlugins.push(require(path.join(PLUGIN_DIR, plugin, "index.js")));
+        });
+        logger.info(`loaded ${_loadedPlugins.length} plugin(s)`);
+    });
+
+    _loadPlugins();
 })();
