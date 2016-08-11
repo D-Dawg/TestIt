@@ -27,14 +27,15 @@
     const logger = require('proxey-ilogger')('PluginManager');
     const _ = require('underscore');
 
-    const PLUGIN_DIR = path.join(__dirname, "..", "plugins");
+    const PLUGIN_DIR = path.join(__dirname, '..', 'plugins');
 
     let _loadedPlugins = [];
 
     let _loadPlugins = Promise.coroutine(function*() {
         let plugins = yield fs.readdirAsync(PLUGIN_DIR);
         _.each(plugins, plugin => {
-            _loadedPlugins.push(require(path.join(PLUGIN_DIR, plugin, "index.js")));
+            logger.info(`loading plugin '${plugin}'`);
+            _loadedPlugins.push(require(path.join(PLUGIN_DIR, plugin, 'index.js')));
         });
         logger.info(`loaded ${_loadedPlugins.length} plugin(s)`);
     });
