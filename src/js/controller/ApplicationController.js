@@ -120,6 +120,26 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             $mdDialog.show(confirm).then(() => {
                 array.splice(index, 1);
             });
+        },
+        createTest(ev) {
+            let that = this;
+            $mdDialog.show({
+                controller: ['$scope', (_$scope) => {
+                    _$scope.application = that.application;
+                    _$scope.createTest = {
+                        loading: false,
+                        selectedBuild: _$scope.application.builds[0],
+                        doCreate: function() {
+                            this.loading = true;
+                        }
+                    };
+                    _$scope.cancel = () => $mdDialog.hide();
+                }],
+                templateUrl: '/templates/dialogs/create-test-dialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
         }
     };
 

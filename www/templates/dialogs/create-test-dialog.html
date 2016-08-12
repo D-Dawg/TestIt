@@ -1,0 +1,18 @@
+<md-dialog flex>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Create test</h2>
+            <span flex></span>
+            <md-button aria-label="Cancel" class="md-icon-button" ng-click="cancel()">
+                <ng-md-icon icon="close"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="layout-padding">
+        <md-button aria-label="Select build" class="md-raised" ng-repeat="build in application.builds" ng-disabled="createTest.selectedBuild === build || createTest.loading" ng-bind="build.name" ng-click="createTest.selectedBuild = build"></md-button>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button aria-label="Create test" class="md-primary md-raised" ng-click="createTest.doCreate()" ng-disabled="createTest.loading">Create Test</md-button>
+        <md-button aria-label="Cancel" class="md-raised" ng-click="cancel()">Cancel</md-button>
+    </md-dialog-actions>
+</md-dialog>
