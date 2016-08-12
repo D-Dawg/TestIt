@@ -29,15 +29,15 @@
 
     const PLUGIN_DIR = path.join(__dirname, '..', 'plugins');
 
-    let _loadedPlugins = [];
+    let _loadedPlugins = {};
 
     let _loadPlugins = Promise.coroutine(function*() {
         let plugins = yield fs.readdirAsync(PLUGIN_DIR);
         _.each(plugins, plugin => {
             logger.info(`loading plugin '${plugin}'`);
-            _loadedPlugins.push(require(path.join(PLUGIN_DIR, plugin, 'index.js')));
+            _loadedPlugins[plugin] = require(path.join(PLUGIN_DIR, plugin, 'index.js'));
         });
-        logger.info(`loaded ${_loadedPlugins.length} plugin(s)`);
+        logger.info(`loaded ${Object.keys(_loadedPlugins).length} plugin(s)`);
     });
 
     _loadPlugins();
