@@ -27,10 +27,12 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             this.refreshFeatures();
         }),
         discardChanges: function () {
+            this.saving = true;
             this.application = JSON.parse(JSON.stringify(this.beforeEditApplication));
             $timeout(() => {
                 this.wasModified = false;
-            });
+                this.saving = false;
+            }, 500);
             this.refreshFeatures();
         },
         saveChanges: Promise.coroutine(function*() {
