@@ -23,7 +23,7 @@
     'use strict';
     const mongoose = require('mongoose');
 
-    module.exports = mongoose.model('Template', {
+    module.exports = mongoose.model('Application', {
         name: {
             type: String
         },
