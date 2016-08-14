@@ -44,6 +44,7 @@
     app.use('/admin', requiresPermission(permission.ADMINISTRATION), require('./routes/admin'));
     app.use('/personal', requiresLogin(), require('./routes/personal'));
     app.use('/application', requiresLogin(), require('./routes/application'));
+    app.use('/test', requiresLogin(), require('./routes/test'));
 
     app.get('/', Promise.coroutine(function*(req, res) {
         let user = yield userFromRequest(req);

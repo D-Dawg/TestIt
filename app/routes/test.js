@@ -31,20 +31,91 @@
     const mailer = require('../mailer');
     const permission = require('../enum/permission');
     const requiresPermission = require('./middleware/requires-permission');
+    const Application = require('../models/Application');
+    const _ = require('underscore');
+    const ITEM_STATUS = require('../enum/item-status');
     let router = require('express').Router();
 
 
-    router.post('/assign', requiresPermission(permission.VIEW_TEMPLATE), Promise.coroutine(function* (req, res) {
-        if(typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.assignee === 'string') {
+    router.post('/assign', requiresPermission(permission.ASSIGN_TEST), Promise.coroutine(function* (req, res) {
+        if (typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.assignee === 'string') {
             let test = yield Test.findById(req.body._id);
-            if(test !== null) {
+            if (test !== null) {
                 test.assignee = req.body.assignee;
                 res.send(yield test.save());
             } else {
                 res.sendStatus(500);
             }
         } else {
-            res.sendStatus(401);
+            res.sendStatus(400);
+        }
+    }));
+
+    router.post('/fromApplication', requiresPermission(permission.CREATE_TEST), Promise.coroutine(function*(req, res) {
+        if (typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.build === 'string') {
+            let application = yield Application.findById(req.body._id);
+            if (!application) {
+                res.status(500).send('Application not found');
+                return -1;
+            }
+            let build;
+            _.each(application.builds, _build => {
+                if (_build.name === req.body.build) {
+                    build = _build;
+                }
+            });
+            if (!build) {
+                res.status(500).send('Build not found');
+                return -1;
+            }
+            let _test = {};
+            _.each(application.features, feature => {
+                if (build.features[feature.name.trim()]) {
+                    let _section = null;
+                    _.each(feature.items.split('\n'), row => {
+                        row = row.trim();
+                        if (row.indexOf('-') === 0) {
+                            _section = row.substring(1);
+                        } else {
+                            if (row.length > 0) {
+                                _test[_section] = _test[_section] || [];
+                                _test[_section].push(row);
+                            }
+                        }
+                    });
+                }
+            });
+
+            let test = {
+                metaData: {},
+                assignee: req.user.user,
+                sections: [],
+                comments: [],
+                relatedIssues: []
+            };
+
+            _.each(_test, (val, key) => {
+                let section = {
+                    name: key,
+                    items: []
+                };
+
+                _.each(val, item => {
+                    section.items.push({
+                        text: item,
+                        comment: "",
+                        status: ITEM_STATUS.UNTESTED
+                    });
+                });
+
+                test.sections.push(section);
+            });
+
+
+            let testEntity = new Test(test);
+            res.send(yield testEntity.save());
+        } else {
+            res.sendStatus(400);
         }
     }));
 

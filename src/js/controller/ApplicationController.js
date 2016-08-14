@@ -37,11 +37,11 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         },
         saveChanges: Promise.coroutine(function*() {
             this.saving = true;
+            this.refreshFeatures();
             this.beforeEditApplication = JSON.parse(JSON.stringify(this.application));
             yield $http.post('/application', this.application);
             this.saving = false;
             this.wasModified = false;
-            this.refreshFeatures();
             $scope.$apply();
         }),
         showFeature: function (feature, ev) {
@@ -94,8 +94,8 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
         refreshFeatures: function () {
             let availableFeatures = this.availableFeatures = [];
             _.each(this.application.features, feature => {
-                if (availableFeatures.indexOf(feature.name.toUpperCase().trim()) === -1) {
-                    availableFeatures.push(feature.name.toUpperCase().trim());
+                if (availableFeatures.indexOf(feature.name.trim()) === -1) {
+                    availableFeatures.push(feature.name.trim());
                 }
             });
 
@@ -133,6 +133,12 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
                         selectedBuild: _$scope.application.builds[0],
                         doCreate: function() {
                             this.loading = true;
+                            $http.post('/test/fromApplication', {
+                                _id: _$scope.application._id,
+                                build: this.selectedBuild.name
+                            }, () => {
+
+                            });
                         }
                     };
                     _$scope.cancel = () => $mdDialog.hide();

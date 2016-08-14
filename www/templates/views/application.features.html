@@ -13,7 +13,7 @@
                  transfer the object that was assigned to it. If an element was
                  dragged away, you have to remove it from the original list
                  yourself using the dnd-moved attribute -->
-            <li ng-repeat="feature in application.application.features track by $index"
+            <li ng-repeat="feature in application.application.features"
                 dnd-draggable="feature"
                 dnd-moved="application.application.features.splice($index, 1)"
                 dnd-effect-allowed="move">
@@ -21,7 +21,7 @@
                 <a ng-click="application.showFeature(feature)" class="pointer">
                     Feature: <span ng-bind="feature.name"></span>
                 </a>
-                <md-button class="md-primary md-raised" ng-click="application.deleteItemWithModal(application.application.features, $index)" style="float: right">Remove Feature</md-button>
+                <md-button class="md-primary md-raised" ng-click="application.deleteItemWithModal(application.application.features, $index)" style="float: right" ng-show="application.editing">Remove Feature</md-button>
                 <br />
                 <br />
             </li>
