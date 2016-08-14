@@ -22,8 +22,14 @@
 (function() {
     'use strict';
     const mongoose = require('mongoose');
+    const TEST_STATUS = require('../enum/test-status');
 
     module.exports = mongoose.model('Test', {
+        status: {
+            type: String,
+            enum: Object.keys(TEST_STATUS),
+            default: TEST_STATUS.OPEN
+        },
         name: {
             type: String
         },
@@ -33,6 +39,9 @@
         metaData: {},
         sections: [],
         comments: [],
-        relatedIssues: []
+        relatedIssues: [],
+        lastModified: {
+            type: Date
+        }
     });
 })();

@@ -36,6 +36,36 @@
     const ITEM_STATUS = require('../enum/item-status');
     let router = require('express').Router();
 
+    router.get('/assignedToMe', Promise.coroutine(function*(req, res) {
+        if (!req.query.status) {
+            res.status(400).send('query parameter \'status\' missing');
+            return -1;
+        }
+        let tests = yield Test.find({assignee: req.user.user, status: req.query.status});
+        res.send(tests);
+    }));
+
+    router.get('/all', requiresPermission(permission.VIEW_TESTS), Promise.coroutine(function*(req, res) {
+        if (!req.query.status) {
+            res.status(400).send('query parameter \'status\' missing');
+            return -1;
+        }
+        let tests = yield Test.find({status: req.query.status}).sort('-status');
+        res.send(tests);
+    }));
+
+    router.get('/:id', Promise.coroutine(function*(req, res) {
+        let test = yield Test.findById(req.params.id);
+        if(!test) {
+            res.status(404).send('test not found');
+            return -1;
+        }
+        if(test.assignee === req.user.user || (req.user.permissions.indexOf(permission.VIEW_TESTS) > -1)) {
+            res.send(test);
+        } else {
+            res.sendStatus(400);
+        }
+    }));
 
     router.post('/assign', requiresPermission(permission.ASSIGN_TEST), Promise.coroutine(function* (req, res) {
         if (typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.assignee === 'string') {
@@ -46,6 +76,19 @@
             } else {
                 res.sendStatus(500);
             }
+        } else {
+            res.sendStatus(400);
+        }
+    }));
+
+    router.post('/', Promise.coroutine(function*(req, res) {
+        if (typeof req.body === 'object') {
+            let test = yield Test.findById(req.body._id);
+            delete req.body._id;
+            delete req.body.__v;
+            req.body.lastModified = Date.now();
+            test.set(req.body);
+            res.send(yield test.save());
         } else {
             res.sendStatus(400);
         }
@@ -91,7 +134,8 @@
                 assignee: req.user.user,
                 sections: [],
                 comments: [],
-                relatedIssues: []
+                relatedIssues: [],
+                lastModified: Date.now()
             };
 
             _.each(_test, (val, key) => {
@@ -113,7 +157,8 @@
 
 
             let testEntity = new Test(test);
-            res.send(yield testEntity.save());
+            yield testEntity.save();
+            res.send({_id: testEntity._id});
         } else {
             res.sendStatus(400);
         }
