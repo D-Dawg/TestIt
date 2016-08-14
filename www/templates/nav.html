@@ -5,7 +5,7 @@
             <li><a ui-sref="tests">Tests</a></li>
             <li ng-if="permissions.VIEW_APPLICATION"><a ui-sref="applications">Applications</a></li>
             <li ng-if="permissions.ADMINISTRATION"><a ui-sref="administration.users">Administration</a></li>
-            <li><a ui-sref="account"><i class="fa fa-user"></i> {{me.name}}</a></li>
+            <li><a ui-sref="account"><i class="fa fa-user"></i> <span ng-bind="me.name"></span></a></li>
         </ul>
     </div>
 </nav>

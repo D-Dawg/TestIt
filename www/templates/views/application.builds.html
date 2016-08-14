@@ -26,7 +26,7 @@
                 <td ng-bind="feature"></td>
                 <td ng-repeat="build in application.application.builds track by $index" style="text-align: center">
                     <md-checkbox ng-model="build.features[feature]"
-                                 aria-label="{{ feature }}" class="md-primary" ng-disabled="!application.editing">
+                                 aria-label="Enable / Disable feature" class="md-primary" ng-disabled="!application.editing">
                     </md-checkbox>
                 </td>
             </tr>
