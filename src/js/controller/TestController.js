@@ -1,6 +1,8 @@
 window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Promise', 'errorMessage', 'successMessage', 'prompt', '$state', '$interval', function ($scope, $http, $rootScope, Promise, errorMessage, successMessage, prompt, $state, $interval) {
     'use strict';
     $scope.test = {
+        assignee: null,
+        mode: 'items',
         id: $state.params.id,
         loading: false,
         test: null,
@@ -10,6 +12,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
             this.loading = true;
             let response = yield $http.get(`/test/${this.id}`);
             this.test = response.data;
+            this.assignee = this.test.assignee;
             this.loading = false;
         }),
         save: Promise.coroutine(function*() {
@@ -21,7 +24,13 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
             yield $http.post('/test', this.test);
             this.saving = false;
             $scope.$apply();
-        })
+        }),
+        updateAssignee: function() {
+            $http.post('/test/assign', {
+                _id: this.id,
+                assignee: this.assignee
+            });
+        }
     };
 
     $scope.$watch('test.test', (_new, _old) => {

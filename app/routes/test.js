@@ -84,11 +84,16 @@
     router.post('/', Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object') {
             let test = yield Test.findById(req.body._id);
-            delete req.body._id;
-            delete req.body.__v;
-            req.body.lastModified = Date.now();
-            test.set(req.body);
-            res.send(yield test.save());
+            if(test.assignee === req.user.user) {
+                delete req.body._id;
+                delete req.body.__v;
+                delete req.body.assignee;
+                req.body.lastModified = Date.now();
+                test.set(req.body);
+                res.send(yield test.save());
+            } else {
+                res.status(400).send('you can only change tests that are assigned to yourself');
+            }
         } else {
             res.sendStatus(400);
         }

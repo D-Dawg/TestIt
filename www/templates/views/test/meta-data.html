@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-content">
+        <h2>Meta Data</h2>
+
+        <div layout="row">
+            <div flex="33">
+                <md-input-container>
+                    <label>Name</label>
+                    <input type="text" ng-model="test.test.metaData.name" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container ng-show="test.assignee != null && permissions.ASSIGN_TEST">
+                    <label>Assignee</label>
+                    <md-select ng-model="test.assignee" aria-label="Assignee" ng-change="test.updateAssignee()" class="no-margin" ng-disabled="!permissions.ASSIGN_TEST">
+                        <md-option aria-label="{{ user.name }}" ng-repeat="user in users"
+                                   value="{{ user.user }}">
+                            {{ user.name }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>Locale</label>
+                    <input type="text" ng-model="test.test.metaData.locale" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>Device</label>
+                    <input type="text" ng-model="test.test.metaData.device" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+            </div>
+            <div flex="33">
+                <md-input-container>
+                    <label>Application</label>
+                    <input type="text" ng-model="test.test.metaData.application" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>Application Version</label>
+                    <input type="text" ng-model="test.test.metaData.applicationVersion" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>Application Build</label>
+                    <input type="text" ng-model="test.test.metaData.applicationBuild" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+            </div>
+            <div flex="33">
+                <md-input-container>
+                    <label>Server</label>
+                    <input type="text" ng-model="test.test.metaData.server" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>Server Version</label>
+                    <input type="text" ng-model="test.test.metaData.serverVersion" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>OS</label>
+                    <input type="text" ng-model="test.test.metaData.os" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <label>OS Version</label>
+                    <input type="text" ng-model="test.test.metaData.osVersion" ng-disabled="!(test.assignee === me.user)"/>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+</div>

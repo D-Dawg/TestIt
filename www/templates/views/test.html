@@ -14,25 +14,14 @@
                         Save Changes
                     </md-button>
                 </div>
-                <table>
-                    <tbody ng-repeat="section in test.test.sections">
-                    <tr ng-repeat="item in section.items">
-                        <td><span ng-show="$index == 0" ng-bind="section.name"></span></td>
-                        <td ng-bind="item.text"></td>
-                        <td>
-                            <md-select ng-model="item.status" aria-label="Status" class="no-margin">
-                                <md-option ng-repeat="status in enums.ITEM_STATUS"
-                                           value="{{ status }}">
-                                    <span ng-bind="status"></span>
-                                </md-option>
-                            </md-select>
-                        </td>
-                        <td><input type="text" class="test-comment" ng-model="item.comment"
-                                   ng-model-options="{debounce: 500}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+
+                <md-button class="md-raised md-primary" ng-click="test.mode = 'items'" ng-disabled="test.mode === 'items'">Items</md-button>
+                <md-button class="md-raised md-primary" ng-click="test.mode = 'metaData'" ng-disabled="test.mode === 'metaData'">Meta Data</md-button>
             </div>
         </div>
     </div>
+    <div ng-include="'/templates/views/test/items.html'" ng-if="test.mode === 'items'"></div>
+    <div ng-include="'/templates/views/test/meta-data.html'" ng-if="test.mode === 'metaData'"></div>
+
 </div>
+
