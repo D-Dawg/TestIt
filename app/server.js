@@ -32,6 +32,7 @@
     const requiresLogin = require('./routes/middleware/requires-login');
     const userFromRequest = require('./routes/middleware/user-from-request');
     const permission = require('./enum/permission');
+    const ITEM_STATUS = require('./enum/item-status');
 
     const WEBROOT = path.join(__dirname, '..', 'www');
 
@@ -75,6 +76,12 @@
             res.sendStatus(302);
         }
     }));
+
+    app.get('/enums', (req, res) => {
+        res.send({
+            ITEM_STATUS: Object.keys(ITEM_STATUS)
+        })
+    });
 
 
     let port = process.env.port || 8080;
