@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="test in openTests.data">
-                    <td style="width: 50%"><a href="#/test/{{ testysou._id }}">{{ test.metaData.application}}</a></td>
+                    <td style="width: 50%"><a href="#/test/{{ test._id }}">{{ test.metaData.application}}</a></td>
                     <td>{{ (test.metaData.version ||  "unknown version" ) }}</td>
                     <td>{{ (test.metaData.build ||  "unknown build" ) }}</td>
                     <td>{{ (test.metaData.notice ||  "no notice" ) }}</td>
