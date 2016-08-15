@@ -32,12 +32,13 @@
     let router = require('express').Router();
 
 
-    router.get('/session', function(req, res) {
+    router.get('/session', Promise.coroutine(function*(req, res) {
         res.send({
             me: req.user,
-            permissions: Object.keys(permission)
+            permissions: Object.keys(permission),
+            users: yield User.find().select('name user')
         });
-    });
+    }));
 
 
     router.post('/changePassword', Promise.coroutine(function*(req, res) {
