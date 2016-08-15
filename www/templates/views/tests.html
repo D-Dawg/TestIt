@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>My Tests</h1>
+    <div class="card">
+        <div class="card-content">
+            <h2>Open Tests</h2>
+            <md-toolbar ng-show="openTests.loading" layout-padding>
+                <p>
+                    <i class="fa fa-spin fa-spinner"></i> Loading tests...
+                </p>
+            </md-toolbar>
+            <table>
+                <tbody>
+                <tr ng-repeat="test in openTests.data">
+                    <td style="width: 50%"><a href="#/test/{{ application._id }}">{{ test.metaData.application + ", " + (test.metaData.version + "unknown version" )}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2>Closed Tests</h2>
+            <md-toolbar ng-show="closedTests.loading" layout-padding>
+                <p>
+                    <i class="fa fa-spin fa-spinner"></i> Loading tests...
+                </p>
+            </md-toolbar>
+            <table>
+                <tbody>
+                <tr ng-repeat="test in closedTests.data">
+                    <td style="width: 50%"><a href="#/test/{{ application._id }}" ng-bind="test"></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+</div>

@@ -95,7 +95,7 @@
     }));
 
     router.post('/fromApplication', requiresPermission(permission.CREATE_TEST), Promise.coroutine(function*(req, res) {
-        if (typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.build === 'string') {
+        if (typeof req.body === 'object' && typeof req.body._id === 'string' && typeof req.body.build === 'string' && typeof req.body.metaData === 'object') {
             let application = yield Application.findById(req.body._id);
             if (!application) {
                 res.status(500).send('Application not found');
@@ -129,9 +129,19 @@
                 }
             });
 
+            let assignee;
+            if(req.user.permissions.indexOf(permission.ASSIGN_TEST) > -1) {
+                assignee = req.body.assignee || req.user.user;
+            } else {
+                assignee = req.user.user;
+            }
+
+            let metaData = req.body.metaData;
+            metaData.application = application.name + ': ' + build.name;
+
             let test = {
-                metaData: {},
-                assignee: req.user.user,
+                metaData: metaData,
+                assignee: assignee,
                 sections: [],
                 comments: [],
                 relatedIssues: [],
@@ -147,7 +157,7 @@
                 _.each(val, item => {
                     section.items.push({
                         text: item,
-                        comment: "",
+                        comment: '',
                         status: ITEM_STATUS.UNTESTED
                     });
                 });

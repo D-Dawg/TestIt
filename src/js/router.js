@@ -19,11 +19,23 @@ window.testit.config(['$stateProvider', '$urlRouterProvider',
                     nav: {templateUrl: '/templates/nav.html'},
                     main: {templateUrl: '/templates/views/application.html', controller: 'ApplicationController'}
                 }
+            }).state('my-tests', {
+                url: '/my-tests',
+                views: {
+                    nav: {templateUrl: '/templates/nav.html'},
+                    main: {templateUrl: '/templates/views/my-tests.html', controller: 'MyTestsController'}
+                }
             }).state('tests', {
                 url: '/tests',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
                     main: {templateUrl: '/templates/views/tests.html'}
+                }
+            }).state('test', {
+                url: '/test/:id',
+                views: {
+                    nav: {templateUrl: '/templates/nav.html'},
+                    main: {templateUrl: '/templates/views/test.html', controller: 'TestController'}
                 }
             }).state('account', {
                 url: '/account',
