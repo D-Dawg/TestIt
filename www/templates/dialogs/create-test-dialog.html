@@ -9,10 +9,41 @@
         </div>
     </md-toolbar>
     <md-dialog-content class="layout-padding">
-        <md-button aria-label="Select build" class="md-raised" ng-repeat="build in application.builds" ng-disabled="createTest.selectedBuild === build || createTest.loading" ng-bind="build.name" ng-click="createTest.selectedBuild = build"></md-button>
+        <md-button aria-label="Select build" class="md-raised" ng-repeat="build in application.builds"
+                   ng-disabled="createTest.selectedBuild === build || createTest.loading" ng-bind="build.name"
+                   ng-click="createTest.selectedBuild = build"></md-button>
+        <br/>
+        <hr/>
+        <md-input-container>
+            <label>Application</label>
+            <input ng-model="createTest.metaData.application" disabled>
+        </md-input-container>
+        <md-input-container>
+            <label>Version</label>
+            <input ng-model="createTest.metaData.version">
+        </md-input-container>
+        <md-input-container>
+            <label>Build</label>
+            <input ng-model="createTest.metaData.build">
+        </md-input-container>
+        <md-input-container>
+            <label>Notice</label>
+            <input ng-model="createTest.metaData.notice">
+        </md-input-container>
+        <md-input-container ng-show="permissions.ASSIGN_TEST">
+            <label>Assignee</label>
+            <md-select ng-model="createTest.assignee" aria-label="Assignee" class="no-margin">
+                <md-option ng-repeat="user in users"
+                           value="{{ user.user }}">
+                    <span ng-bind="user.name"></span>
+                </md-option>
+            </md-select>
+        </md-input-container>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button aria-label="Create test" class="md-primary md-raised" ng-click="createTest.doCreate()" ng-disabled="createTest.loading">Create Test</md-button>
+        <md-button aria-label="Create test" class="md-primary md-raised" ng-click="createTest.doCreate()"
+                   ng-disabled="createTest.loading || !(createTest.metaData.version > 0)">Create Test
+        </md-button>
         <md-button aria-label="Cancel" class="md-raised" ng-click="cancel()">Cancel</md-button>
     </md-dialog-actions>
 </md-dialog>

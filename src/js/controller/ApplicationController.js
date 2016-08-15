@@ -128,16 +128,25 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
             $mdDialog.show({
                 controller: ['$scope', (_$scope) => {
                     _$scope.application = that.application;
+                    _$scope.users = $scope.users;
+                    _$scope.permissions = $scope.permissions;
                     _$scope.createTest = {
+                        metaData: {
+                            application: that.application.name
+                        },
                         loading: false,
                         selectedBuild: _$scope.application.builds[0],
+                        assignee: $scope.users[0].user,
                         doCreate: function() {
                             this.loading = true;
                             $http.post('/test/fromApplication', {
                                 _id: _$scope.application._id,
-                                build: this.selectedBuild.name
-                            }, () => {
-
+                                build: this.selectedBuild.name,
+                                metaData: this.metaData,
+                                assignee: this.assignee
+                            }).success(response => {
+                                $mdDialog.hide();
+                                location.href='#/test/' + response._id
                             });
                         }
                     };

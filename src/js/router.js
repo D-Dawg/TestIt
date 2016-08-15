@@ -23,13 +23,13 @@ window.testit.config(['$stateProvider', '$urlRouterProvider',
                 url: '/my-tests',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/my-tests.html', controller: 'MyTestsController'}
+                    main: {templateUrl: '/templates/views/tests.html', controller: 'MyTestsController'}
                 }
             }).state('tests', {
                 url: '/tests',
                 views: {
                     nav: {templateUrl: '/templates/nav.html'},
-                    main: {templateUrl: '/templates/views/tests.html'}
+                    main: {templateUrl: '/templates/views/tests.html', controller: 'TestsController'}
                 }
             }).state('test', {
                 url: '/test/:id',

@@ -1,5 +1,4 @@
 <div class="container">
-    <h1>My Tests</h1>
     <div class="card">
         <div class="card-content">
             <h2>Open Tests</h2>
@@ -8,13 +7,27 @@
                     <i class="fa fa-spin fa-spinner"></i> Loading tests...
                 </p>
             </md-toolbar>
-            <table>
+            <table ng-show="openTests.data.length > 0">
+                <thead>
+                <tr>
+                    <th>Application</th>
+                    <th>Version</th>
+                    <th>Build</th>
+                    <th>Notice</th>
+                    <th>Assignee</th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr ng-repeat="test in openTests.data">
-                    <td style="width: 50%"><a href="#/test/{{ application._id }}">{{ test.metaData.application + ", " + (test.metaData.version + "unknown version" )}}</a></td>
+                    <td style="width: 50%"><a href="#/test/{{ testysou._id }}">{{ test.metaData.application}}</a></td>
+                    <td>{{ (test.metaData.version ||  "unknown version" ) }}</td>
+                    <td>{{ (test.metaData.build ||  "unknown build" ) }}</td>
+                    <td>{{ (test.metaData.notice ||  "no notice" ) }}</td>
+                    <td>{{ test.assignee }}</td>
                 </tr>
                 </tbody>
             </table>
+            <span ng-hide="openTests.data.length > 0">No open tests found</span>
         </div>
     </div>
     <div class="card">
@@ -25,13 +38,27 @@
                     <i class="fa fa-spin fa-spinner"></i> Loading tests...
                 </p>
             </md-toolbar>
-            <table>
+            <table ng-show="closedTests.data.length > 0">
+                <thead>
+                <tr>
+                    <th>Application</th>
+                    <th>Version</th>
+                    <th>Build</th>
+                    <th>Notice</th>
+                    <th>Assignee</th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr ng-repeat="test in closedTests.data">
-                    <td style="width: 50%"><a href="#/test/{{ application._id }}" ng-bind="test"></a></td>
+                    <td style="width: 50%"><a href="#/test/{{ test._id }}">{{ test.metaData.application}}</a></td>
+                    <td>{{ (test.metaData.version ||  "unknown version" ) }}</td>
+                    <td>{{ (test.metaData.build ||  "unknown build" ) }}</td>
+                    <td>{{ (test.metaData.notice ||  "no notice" ) }}</td>
+                    <td>{{ test.assignee }}</td>
                 </tr>
                 </tbody>
             </table>
+            <span ng-hide="closedTests.data.length > 0">No closed tests found</span>
         </div>
     </div>
     <br />
