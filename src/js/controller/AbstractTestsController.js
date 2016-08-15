@@ -5,7 +5,9 @@ window.testit.controller('AbstractTestsController', ['$scope', '$http', '$rootSc
         loading: false,
         data: null,
         load: Promise.coroutine(function*() {
-            if(!this.route) throw new Error('route not set');
+            if (!this.route) {
+                throw new Error('route not set');
+            }
             this.loading = true;
             let response = yield $http.get(this.route);
             this.data = response.data;
@@ -18,7 +20,9 @@ window.testit.controller('AbstractTestsController', ['$scope', '$http', '$rootSc
         loading: false,
         data: null,
         load: Promise.coroutine(function*() {
-            if(!this.route) throw new Error('route not set');
+            if (!this.route) {
+                throw new Error('route not set');
+            }
             this.loading = true;
             let response = yield $http.get(this.route);
             this.data = response.data;

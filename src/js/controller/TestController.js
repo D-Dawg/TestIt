@@ -13,7 +13,9 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
             this.loading = false;
         }),
         save: Promise.coroutine(function*() {
-            if(this.saving) return;
+            if (this.saving) {
+                return -1;
+            }
             this.saving = true;
             this.wasModified = false;
             yield $http.post('/test', this.test);
@@ -38,7 +40,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
     let autoSaveInterval = $interval(() => {
         console.log('beep');
         console.log($scope.test);
-        if($scope.test.wasModified) {
+        if ($scope.test.wasModified) {
             console.log('boop');
             $scope.test.save();
         }

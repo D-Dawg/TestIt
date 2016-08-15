@@ -80,7 +80,7 @@
     app.get('/enums', (req, res) => {
         res.send({
             ITEM_STATUS: Object.keys(ITEM_STATUS)
-        })
+        });
     });
 
 

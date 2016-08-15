@@ -146,7 +146,7 @@ window.testit.controller('ApplicationController', ['$scope', '$http', '$rootScop
                                 assignee: this.assignee
                             }).success(response => {
                                 $mdDialog.hide();
-                                location.href='#/test/' + response._id
+                                location.href='#/test/' + response._id;
                             });
                         }
                     };
