@@ -36,6 +36,11 @@
     const ITEM_STATUS = require('../enum/item-status');
     let router = require('express').Router();
 
+    router.post('/liveTesting/:id', function (req, res) {
+        Test.findOneAndUpdate({_id: req.params.id, assignee: req.user.user}, {$inc: {testDuration: 10}}).exec();
+        res.end();
+    });
+
     router.get('/assignedToMe', Promise.coroutine(function*(req, res) {
         if (!req.query.status) {
             res.status(400).send('query parameter \'status\' missing');
@@ -56,11 +61,11 @@
 
     router.get('/:id', Promise.coroutine(function*(req, res) {
         let test = yield Test.findById(req.params.id);
-        if(!test) {
+        if (!test) {
             res.status(404).send('test not found');
             return -1;
         }
-        if(test.assignee === req.user.user || (req.user.permissions.indexOf(permission.VIEW_TESTS) > -1)) {
+        if (test.assignee === req.user.user || (req.user.permissions.indexOf(permission.VIEW_TESTS) > -1)) {
             res.send(test);
         } else {
             res.sendStatus(400);
@@ -84,10 +89,11 @@
     router.post('/', Promise.coroutine(function*(req, res) {
         if (typeof req.body === 'object') {
             let test = yield Test.findById(req.body._id);
-            if(test.assignee === req.user.user) {
+            if (test.assignee === req.user.user) {
                 delete req.body._id;
                 delete req.body.__v;
                 delete req.body.assignee;
+                delete req.body.testDuration;
                 req.body.lastModified = Date.now();
                 test.set(req.body);
                 res.send(yield test.save());
@@ -135,7 +141,7 @@
             });
 
             let assignee;
-            if(req.user.permissions.indexOf(permission.ASSIGN_TEST) > -1) {
+            if (req.user.permissions.indexOf(permission.ASSIGN_TEST) > -1) {
                 assignee = req.body.assignee || req.user.user;
             } else {
                 assignee = req.user.user;

@@ -7,6 +7,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
         loading: false,
         test: null,
         wasModified: false,
+        lastModifiedTimestamp: null,
         saving: false,
         load: Promise.coroutine(function*() {
             this.loading = true;
@@ -49,6 +50,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
 
     $scope.$watch('test.test', (_new, _old) => {
         if (_old !== null && typeof _old === 'object') {
+            $scope.test.lastModifiedTimestamp = Date.now();
             $scope.test.wasModified = true;
         }
     }, true);
@@ -59,6 +61,12 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
         }
         return null;
     };
+
+    let liveTestingInterval = $interval(() => {
+        if($scope.test.lastModifiedTimestamp && $scope.test.lastModifiedTimestamp > Date.now() - 60000) {
+            $http.post('/test/liveTesting/' + $scope.test.id, {});
+        }
+    }, 10000);
 
     let autoSaveInterval = $interval(() => {
         if ($scope.test.wasModified) {
@@ -77,6 +85,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
         window.onbeforeunload = null;
         removeStateChangeListener();
         $interval.cancel(autoSaveInterval);
+        $interval.cancel(liveTestingInterval);
     });
 
     $scope.test.load();

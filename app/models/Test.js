@@ -36,6 +36,10 @@
         assignee: {
             type: String
         },
+        testDuration: {
+            type: Number,
+            default: 0
+        },
         metaData: {},
         sections: [],
         comments: [],
