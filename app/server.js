@@ -33,6 +33,8 @@
     const userFromRequest = require('./routes/middleware/user-from-request');
     const permission = require('./enum/permission');
     const ITEM_STATUS = require('./enum/item-status');
+    const COMMENT_STATUS = require('./enum/comment-status');
+    const RELATED_ISSUE_STATUS = require('./enum/related-issue-status');
 
     const WEBROOT = path.join(__dirname, '..', 'www');
 
@@ -79,7 +81,9 @@
 
     app.get('/enums', (req, res) => {
         res.send({
-            ITEM_STATUS: Object.keys(ITEM_STATUS)
+            ITEM_STATUS: Object.keys(ITEM_STATUS),
+            COMMENT_STATUS: Object.keys(COMMENT_STATUS),
+            RELATED_ISSUE_STATUS: Object.keys(RELATED_ISSUE_STATUS)
         });
     });
 

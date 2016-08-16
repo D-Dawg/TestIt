@@ -14,6 +14,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
             this.test = response.data;
             this.assignee = this.test.assignee;
             this.loading = false;
+            $scope.$apply();
         }),
         save: Promise.coroutine(function*() {
             if (this.saving) {
@@ -29,6 +30,19 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
             $http.post('/test/assign', {
                 _id: this.id,
                 assignee: this.assignee
+            });
+        },
+        addComment: function(comments) {
+            comments.push({
+                status: 'HINT',
+                text: ''
+            });
+        },
+        addIssue: function(issues) {
+            issues.push({
+                key: '',
+                status: 'UNTESTED',
+                text: ''
             });
         }
     };
@@ -47,10 +61,7 @@ window.testit.controller('TestController', ['$scope', '$http', '$rootScope', 'Pr
     };
 
     let autoSaveInterval = $interval(() => {
-        console.log('beep');
-        console.log($scope.test);
         if ($scope.test.wasModified) {
-            console.log('boop');
             $scope.test.save();
         }
     }, 5000);

@@ -1,0 +1,33 @@
+<div class="card">
+    <div class="card-content">
+        <md-button class="md-raised md-primary" style="float: right" ng-show="test.assignee == me.user" ng-click="test.addComment(test.test.comments)">Add Comment</md-button>
+        <h2>Comments</h2>
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Status</th>
+                <th>Text</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="comment in test.test.comments">
+                <td>
+                    <md-button class="md-raised no-margin" ng-click="test.test.comments.splice($index, 1)" ng-disabled="!(test.assignee === me.user)">Remove</md-button>
+                </td>
+                <td>
+                    <md-select ng-model="comment.status" aria-label="Status" class="no-margin" ng-disabled="!(test.assignee === me.user)">
+                        <md-option ng-repeat="status in enums.COMMENT_STATUS"
+                                   value="{{ status }}">
+                            <span ng-bind="status"></span>
+                        </md-option>
+                    </md-select>
+                </td>
+                <td>
+                    <input class="no-margin no-padding" type="text" ng-model="comment.text" ng-disabled="!(test.assignee === me.user)">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -7,9 +7,13 @@
                 </p>
             </md-toolbar>
             <div ng-hide="test.loading">
+                <h4><span ng-bind="test.test.metaData.application"></span>,  Version: <span ng-bind="test.test.metaData.version"></span></h4>
+                <span md-colors="{color: 'warn'}" ng-hide="test.assignee == me.user">Hint: You can not modify this test because you are not the assignee</span>
+                    <br />
+                    <br />
                 <div style="float: right">
                     <md-button class="md-raised md-primary" ng-disabled="test.saving || !test.wasModified"
-                               ng-click="test.save()">
+                               ng-click="test.save()" ng-show="me.user === test.assignee">
                         <i class="fa" ng-class="{'fa-save': !save.saving, 'fa-spinner fa-spin': save.saving}"></i>
                         Save Changes
                     </md-button>
@@ -17,11 +21,15 @@
 
                 <md-button class="md-raised md-primary" ng-click="test.mode = 'items'" ng-disabled="test.mode === 'items'">Items</md-button>
                 <md-button class="md-raised md-primary" ng-click="test.mode = 'metaData'" ng-disabled="test.mode === 'metaData'">Meta Data</md-button>
+                <md-button class="md-raised md-primary" ng-click="test.mode = 'comments'" ng-disabled="test.mode === 'comments'">Comments</md-button>
+                <md-button class="md-raised md-primary" ng-click="test.mode = 'relatedIssues'" ng-disabled="test.mode === 'relatedIssues'">Related Issues</md-button>
             </div>
         </div>
     </div>
-    <div ng-include="'/templates/views/test/items.html'" ng-if="test.mode === 'items'"></div>
-    <div ng-include="'/templates/views/test/meta-data.html'" ng-if="test.mode === 'metaData'"></div>
+    <div ng-include="'/templates/views/test/items.html'" ng-if="test.mode === 'items' && !test.loading"></div>
+    <div ng-include="'/templates/views/test/meta-data.html'" ng-if="test.mode === 'metaData' && !test.loading"></div>
+    <div ng-include="'/templates/views/test/comments.html'" ng-if="test.mode === 'comments' && !test.loading"></div>
+    <div ng-include="'/templates/views/test/related-issues.html'" ng-if="test.mode === 'relatedIssues' && !test.loading"></div>
 
 </div>
 

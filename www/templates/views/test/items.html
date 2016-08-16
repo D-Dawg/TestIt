@@ -7,7 +7,7 @@
                 <td><span ng-show="$index == 0" ng-bind="section.name"></span></td>
                 <td ng-bind="item.text"></td>
                 <td>
-                    <md-select ng-model="item.status" aria-label="Status" class="no-margin">
+                    <md-select ng-model="item.status" aria-label="Status" class="no-margin" ng-disabled="!(test.assignee === me.user)">
                         <md-option ng-repeat="status in enums.ITEM_STATUS"
                                    value="{{ status }}">
                             <span ng-bind="status"></span>
@@ -15,7 +15,7 @@
                     </md-select>
                 </td>
                 <td><input type="text" class="test-comment" ng-model="item.comment"
-                           ng-model-options="{debounce: 500}"></td>
+                           ng-model-options="{debounce: 500}" ng-disabled="!(test.assignee === me.user)"></td>
             </tr>
             </tbody>
         </table>
