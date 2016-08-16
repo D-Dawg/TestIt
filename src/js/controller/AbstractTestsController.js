@@ -12,6 +12,7 @@ window.testit.controller('AbstractTestsController', ['$scope', '$http', '$rootSc
             let response = yield $http.get(this.route);
             this.data = response.data;
             this.loading = false;
+            $scope.$apply();
         })
     };
 
@@ -27,6 +28,7 @@ window.testit.controller('AbstractTestsController', ['$scope', '$http', '$rootSc
             let response = yield $http.get(this.route);
             this.data = response.data;
             this.loading = false;
+            $scope.$apply();
         })
     };
 }]);
